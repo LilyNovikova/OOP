@@ -1,0 +1,6 @@
+c:\users\stud\documents\visual studio 2015\Projects\StringPlus\StringPlus\bin\Debug\StringPlus.exe.config
+c:\users\stud\documents\visual studio 2015\Projects\StringPlus\StringPlus\bin\Debug\StringPlus.exe
+c:\users\stud\documents\visual studio 2015\Projects\StringPlus\StringPlus\bin\Debug\StringPlus.pdb
+c:\users\stud\documents\visual studio 2015\Projects\StringPlus\StringPlus\obj\Debug\StringPlus.csprojResolveAssemblyReference.cache
+c:\users\stud\documents\visual studio 2015\Projects\StringPlus\StringPlus\obj\Debug\StringPlus.exe
+c:\users\stud\documents\visual studio 2015\Projects\StringPlus\StringPlus\obj\Debug\StringPlus.pdb
