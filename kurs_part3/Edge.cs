@@ -14,6 +14,21 @@ namespace kurs_part3
         private int bandwidth;
         private int flow;
 
+        public override string ToString()
+        {
+            return string.Format("{0}-{1}[{2}/{3}]", begin, end, flow, bandwidth);
+        }
+
+        public bool Equals(Edge edge)
+        {
+            return (edge.begin.Equals(begin) && edge.end.Equals(end) || edge.begin.Equals(end) && edge.end.Equals(begin));
+        }
+
+        public bool HasCommonNode(Edge edge)
+        {
+            return (edge.begin.Equals(begin) || edge.end.Equals(end) || edge.begin.Equals(end) || edge.end.Equals(begin));
+        }
+
         public Edge (int edge_bandwidth)
         {
             bandwidth = edge_bandwidth;
@@ -24,8 +39,8 @@ namespace kurs_part3
 
         public Edge(Node begin_node, Node end_node, int edge_bandwidth)
         {
-            if (!begin_node.exist()) throw new ArgumentNullException("Nonexisting begin node");
-            if (!end_node.exist()) throw new ArgumentNullException("Nonexisting end node");
+            if (!begin_node.Exist()) throw new ArgumentNullException("Nonexisting begin node");
+            if (!end_node.Exist()) throw new ArgumentNullException("Nonexisting end node");
             begin = begin_node.copy();
             end = end_node.copy();
             bandwidth = edge_bandwidth;
@@ -38,28 +53,18 @@ namespace kurs_part3
         public Edge copy()
         {
             Edge new_edge = new Edge(begin, end, bandwidth);
-            new_edge.setFlow(flow);
+            new_edge.SetFlow(flow);
             return new_edge;
         }
-
-      /*  public static LinkedList<Edge> copyEdgeArray(LinkedList<Edge> arr)
-        {
-            if (arr == null) return null;
-            LinkedList<Edge> new_arr = new Edge[arr.Length];
-            for (int i = 0; i < arr.Length; i++)
-                new_arr[i] = arr[i].copy();
-            return new_arr;
-        }
-        */
         public void SetBegin(Node EdgeBegin) { begin = EdgeBegin; }
         public void SetEnd(Node EdgeEnd) { end = EdgeEnd; }
 
-        public Node getBegin() { return begin; }
-        public Node getEnd() { return end; }
-        public int getBandwidth() { return bandwidth; }
-        public int getFlow() { return flow; }
+        public Node GetBegin() { return begin; }
+        public Node GetEnd() { return end; }
+        public int GetBandwidth() { return bandwidth; }
+        public int GetFlow() { return flow; }
 
-        public void setFlow(int new_flow) { flow = new_flow; }
+        public void SetFlow(int new_flow) { flow = new_flow; }
     }
 
 }

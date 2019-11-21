@@ -12,39 +12,49 @@ namespace kurs_part3
     //что первично: вершины или рёбра? (т.е. вершина может быть без вход|выход рёбер или ребро может быть без нач|конеч вершин?)
     public class Node
     {
-        
+
         private string name;
-        private Edge[] edge_out;
-        private Edge[] edge_in;
+        private Edge[] EdgeOut;
+        private Edge[] EdgeIn;
         private int number_out;
         private int number_in;
         public static int count = 0;
 
-        public Node() { name = null; number_out = 0; number_in = 0; edge_out = new Edge[0]; edge_in = new Edge[0]; }
-        public Node(string new_name) { name = (string)new_name.Clone(); number_out = 0; number_in = 0; edge_out = new Edge[0]; edge_in = new Edge[0]; count++; }
+        public override string ToString()
+        {
+            return name;
+        }
+
+        public bool Equals(Node node)
+        {
+            return node.name.Equals(name);
+        }
+
+        public Node() { name = null; number_out = 0; number_in = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; }
+        public Node(string new_name) { name = (string)new_name.Clone(); number_out = 0; number_in = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; count++; }
         ~Node() { }
 
-        public string getName() { return name; }
-        public Edge[] getEdgesOut() { return edge_out; }
-        public Edge[] getEdgesIn() { return edge_in; }
+        public string GetName() { return name; }
+        public Edge[] GetEdgesOut() { return EdgeOut; }
+        public Edge[] getEdgesIn() { return EdgeIn; }
         public int getNumberOut() { return number_out; }
         public int getNumberIn() { return number_in; }
 
         public void addEdgeIn(Edge new_edge)
         {
-            edge_in = Utils<Edge>.ResizeArray(edge_in, (uint)edge_in.Length + 1);
-            edge_in[edge_in.Length - 1] =  new_edge;
+            EdgeIn = Utils<Edge>.ResizeArray(EdgeIn, (uint)EdgeIn.Length + 1);
+            EdgeIn[EdgeIn.Length - 1] = new_edge;
             number_in++;
         }
 
         public void addEdgeOut(Edge new_edge)
         {
-            edge_out = Utils<Edge>.ResizeArray(edge_out, (uint)edge_out.Length + 1);
-            edge_out[edge_out.Length - 1] = new_edge;
+            EdgeOut = Utils<Edge>.ResizeArray(EdgeOut, (uint)EdgeOut.Length + 1);
+            EdgeOut[EdgeOut.Length - 1] = new_edge;
             number_out++;
         }
 
-        public bool exist()
+        public bool Exist()
         {
             if (name != null) return true;
             return false;
@@ -53,77 +63,74 @@ namespace kurs_part3
         public Node copy()
         {
             Node new_node = new Node(name);
-            new_node.edge_in = edge_in;
-            new_node.edge_out = edge_out;
+            new_node.EdgeIn = EdgeIn;
+            new_node.EdgeOut = EdgeOut;
             new_node.number_in = number_in;
             new_node.number_out = number_out;
             return new_node;
         }
 
         //finding way from this node to the sink node
-        public Edge[] findWay(Node sink, ref Edge[] way, out bool way_found_flag)
+        public Edge[] FindWay(Node sink, ref Edge[] way, out bool IsFoundWay)
         {
-            way_found_flag = false;
-            if (!exist()) throw new NullReferenceException();
+            IsFoundWay = false;
+            if (!Exist()) throw new NullReferenceException();
             if (this == sink)
             {
-                way_found_flag = true;
+                IsFoundWay = true;
                 return way;
             }
 
-            int way_length = way.Length;
-
-            if (edge_out.Length != 0 || edge_in.Length != 0)
+            uint WayLength = (uint)way.Length;
+            way = Utils<Edge>.ResizeArray(way, WayLength + 1);
+            if (EdgeOut.Length != 0 || EdgeIn.Length != 0)
             {
-                Edge[] current_way = new Edge[0];
+                Edge[] CurrentWay = new Edge[0];
                 //
                 for (int i = 0; i < number_out; i++)
                 {
-                    bool no_cycles = true;
-                    for (int j = 0; j < way_length && no_cycles; j++)
-                        if (way[j].Equals(edge_out[i]))
-                            no_cycles = false;
+                    bool IsNoCycles = true;
+                    for (int j = 0; j < WayLength && IsNoCycles; j++)
+                        if (way[j].Equals(EdgeOut[i]))
+                            IsNoCycles = false;
 
-                    if (edge_out[i].getFlow() < edge_out[i].getBandwidth() && no_cycles)
+                    if (EdgeOut[i].GetFlow() < EdgeOut[i].GetBandwidth() && IsNoCycles)
                     {
-                        //delete last and add this el or just add in empty space???
-                        way = Utils<Edge>.ResizeArray(way, (uint)way.Length + 1);
-                        way[way.Length - 1] = edge_out[i];
-                        current_way = edge_out[i].getEnd().findWay(sink, ref way, out way_found_flag);
-                        if (current_way.Length != 0)
+                        way[WayLength] = EdgeOut[i];
+                        WayLength++;
+                        CurrentWay = EdgeOut[i].GetEnd().FindWay(sink, ref way, out IsFoundWay);
+                        if (CurrentWay.Length != 0)
                         {
-                            way_found_flag = true;
-                            return current_way;
+                            IsFoundWay = true;
+                            return CurrentWay;
                         }
-                        //way = cut_array(way, way_length, len + 1);
+                        way = Utils<Edge>.ResizeArray(way, WayLength--);
                     }
                 }
                 //
                 for (int i = 0; i < number_in; i++)
                 {
-                    bool no_cycles = true;
-                    for (int j = 0; j < way_length && no_cycles; j++)
-                        if (way[j].Equals(edge_in[i]))
-                            no_cycles = false;
+                    bool IsNoCycles = true;
+                    for (int j = 0; j < WayLength && IsNoCycles; j++)
+                        if (way[j].Equals(EdgeIn[i]))
+                            IsNoCycles = false;
 
-                    if (edge_in[i].getFlow() > 0 && no_cycles)
+                    if (EdgeIn[i].GetFlow() > 0 && IsNoCycles)
                     {
-                        //delete last and add this el or just add in empty space???
-                        way = Utils<Edge>.ResizeArray(way, (uint)way.Length + 1);
-                        way[way.Length - 1] = edge_in[i];
-                        way_length++;
-                        current_way = edge_in[i].getBegin().findWay(sink, ref way, out way_found_flag);
-                        if (current_way.Length != 0)
+                        way[WayLength] = EdgeIn[i];
+                        WayLength++;
+                        CurrentWay = EdgeIn[i].GetBegin().FindWay(sink, ref way, out IsFoundWay);
+                        if (CurrentWay.Length != 0)
                         {
-                            way_found_flag = true;
-                            return current_way;
+                            IsFoundWay = true;
+                            return CurrentWay;
                         }
-                        //way = cut_array(way, way_length, len + 1);
+                        way = Utils<Edge>.ResizeArray(way, WayLength--);
                     }
                 }
 
             }
-            return way;
+            return new Edge[0];
         }
     }
 
