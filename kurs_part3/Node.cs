@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using kurs_part3;
 
 namespace kurs_part3
 {
@@ -13,61 +7,55 @@ namespace kurs_part3
     public class Node
     {
 
-        private string name;
-        private Edge[] EdgeOut;
-        private Edge[] EdgeIn;
-        private int number_out;
-        private int number_in;
-        public static int count = 0;
+        public string Name { get; private set; }
+        public Edge[] EdgeOut { get; private set; }
+        public Edge[] EdgeIn { get;private set; }
+        public int NumberOut { get;private set; }
+        public int NumberIn { get;private set; }
+        public static int Count { get; set; } = 0;
 
         public override string ToString()
         {
-            return name;
+            return Name;
         }
 
         public bool Equals(Node node)
         {
-            return node.name.Equals(name);
+            return node.Name.Equals(Name);
         }
 
-        public Node() { name = null; number_out = 0; number_in = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; }
-        public Node(string new_name) { name = (string)new_name.Clone(); number_out = 0; number_in = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; count++; }
+        public Node() { Name = null; NumberOut = 0; NumberIn = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; }
+        public Node(string NewName) { Name = (string)NewName.Clone(); NumberOut = 0; NumberIn = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; Count++; }
         ~Node() { }
 
-        public string GetName() { return name; }
-        public Edge[] GetEdgesOut() { return EdgeOut; }
-        public Edge[] getEdgesIn() { return EdgeIn; }
-        public int getNumberOut() { return number_out; }
-        public int getNumberIn() { return number_in; }
-
-        public void addEdgeIn(Edge new_edge)
+        public void AddEdgeIn(Edge NewEdge)
         {
             EdgeIn = Utils<Edge>.ResizeArray(EdgeIn, (uint)EdgeIn.Length + 1);
-            EdgeIn[EdgeIn.Length - 1] = new_edge;
-            number_in++;
+            EdgeIn[EdgeIn.Length - 1] = NewEdge;
+            NumberIn++;
         }
 
-        public void addEdgeOut(Edge new_edge)
+        public void AddEdgeOut(Edge NewEdge)
         {
             EdgeOut = Utils<Edge>.ResizeArray(EdgeOut, (uint)EdgeOut.Length + 1);
-            EdgeOut[EdgeOut.Length - 1] = new_edge;
-            number_out++;
+            EdgeOut[EdgeOut.Length - 1] = NewEdge;
+            NumberOut++;
         }
 
         public bool Exist()
         {
-            if (name != null) return true;
+            if (Name != null) return true;
             return false;
         }
 
         public Node copy()
         {
-            Node new_node = new Node(name);
-            new_node.EdgeIn = EdgeIn;
-            new_node.EdgeOut = EdgeOut;
-            new_node.number_in = number_in;
-            new_node.number_out = number_out;
-            return new_node;
+            Node NewNode = new Node(Name);
+            NewNode.EdgeIn = EdgeIn;
+            NewNode.EdgeOut = EdgeOut;
+            NewNode.NumberIn = NumberIn;
+            NewNode.NumberOut = NumberOut;
+            return NewNode;
         }
 
         //finding way from this node to the sink node
@@ -87,18 +75,18 @@ namespace kurs_part3
             {
                 Edge[] CurrentWay = new Edge[0];
                 //
-                for (int i = 0; i < number_out; i++)
+                for (int i = 0; i < NumberOut; i++)
                 {
                     bool IsNoCycles = true;
                     for (int j = 0; j < WayLength && IsNoCycles; j++)
                         if (way[j].Equals(EdgeOut[i]))
                             IsNoCycles = false;
 
-                    if (EdgeOut[i].GetFlow() < EdgeOut[i].GetBandwidth() && IsNoCycles)
+                    if (EdgeOut[i].Flow < EdgeOut[i].Bandwidth && IsNoCycles)
                     {
                         way[WayLength] = EdgeOut[i];
                         WayLength++;
-                        CurrentWay = EdgeOut[i].GetEnd().FindWay(sink, ref way, out IsFoundWay);
+                        CurrentWay = EdgeOut[i].End.FindWay(sink, ref way, out IsFoundWay);
                         if (CurrentWay.Length != 0)
                         {
                             IsFoundWay = true;
@@ -108,18 +96,18 @@ namespace kurs_part3
                     }
                 }
                 //
-                for (int i = 0; i < number_in; i++)
+                for (int i = 0; i < NumberIn; i++)
                 {
                     bool IsNoCycles = true;
                     for (int j = 0; j < WayLength && IsNoCycles; j++)
                         if (way[j].Equals(EdgeIn[i]))
                             IsNoCycles = false;
 
-                    if (EdgeIn[i].GetFlow() > 0 && IsNoCycles)
+                    if (EdgeIn[i].Flow > 0 && IsNoCycles)
                     {
                         way[WayLength] = EdgeIn[i];
                         WayLength++;
-                        CurrentWay = EdgeIn[i].GetBegin().FindWay(sink, ref way, out IsFoundWay);
+                        CurrentWay = EdgeIn[i].Begin.FindWay(sink, ref way, out IsFoundWay);
                         if (CurrentWay.Length != 0)
                         {
                             IsFoundWay = true;

@@ -1,56 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using kurs_part3;
 
 namespace kurs_part3
 {
     class Test
     {
+        public static string InputFileName = "net.txt";
+        public static Web web;
+        public static string[] FileContent;
+
         public static void Main()
         {
             try
             {
-                Web web = new Web();
-                web.from_file("file.txt");
-                Console.WriteLine("Nodes {0}", Node.count);
-                Console.WriteLine("E: {0}; N: {1}", web.GetNumberEdges(), web.GetNumberNodes());
-                web.ShowEdges();
-                //web.ResShowInWidth(web.GetSource());
-                int num = web.GetNumberNodes();
+                FileContent = FileUtils.ReadText(InputFileName);
+                web = new Web();
+                web.SourceName = FileContent[0].Split(' ')[0];
+                web.SinkName = FileContent[0].Split(' ')[1];
+                web.AddEdges(FileContent);
+
+                Console.WriteLine("E: {0}; N: {1}", web.NumberEdges, web.NumberNodes);
+
                 Node[] nodes = web.GetAllNodes();
-                Console.WriteLine(nodes.ToString());
-                web.FordFulkerson();
+
+                web.FordFulkersonAlgorithm();
                 int flow = web.SummFlow();
                 Console.WriteLine("Flow: {0}", flow);
-                web.ShowEdges();
+                Console.WriteLine(Utils<Edge>.ArrayToText(web.Edges));
 
+                //check if in- and out-flows are correct for each node 
                 bool IsOK = true;
-                for (int i = 0; i < nodes.Length && IsOK; i++)
+                for (int i = 0; i < nodes.Length; i++)
                 {
                     int NodeFlowIn = 0;
                     int NodeFlowOut = 0;
-                    Edge[] In = nodes[i].getEdgesIn();
-                    Edge[] Out = nodes[i].GetEdgesOut();
+                    Edge[] In = nodes[i].EdgeIn;
+                    Edge[] Out = nodes[i].EdgeOut;
                     for (int j = 0; j < In.Length; j++)
                     {
-                        NodeFlowIn += In[j].GetFlow();
+                        NodeFlowIn += In[j].Flow;
                     }
                     for (int j = 0; j < Out.Length; j++)
                     {
-                        NodeFlowOut += Out[j].GetFlow();
+                        NodeFlowOut += Out[j].Flow;
                     }
-                    
-                    if (NodeFlowIn != NodeFlowOut)
+                    //for middle nodes
+                    if (NodeFlowIn != NodeFlowOut && i != 0 && i != (nodes.Length - 1))
                     {
-                        //IsOK = false;
+                        IsOK = false;
                         Console.Write("! ");
                     }
-                    Console.WriteLine(nodes[i].GetName() + ": in=" + NodeFlowIn + ", out=" + NodeFlowOut);
+                    //for source
+                    if ((NodeFlowIn != 0 || NodeFlowOut != flow) && i == 0)
+                    {
+                        IsOK = false;
+                        Console.Write("! ");
+                    }
+                    //for sink
+                    if ((NodeFlowIn != flow || NodeFlowOut != 0) && i == (nodes.Length - 1))
+                    {
+                        IsOK = false;
+                        Console.Write("! ");
+                    }
+                    Console.WriteLine(nodes[i].Name + ": in=" + NodeFlowIn + ", out=" + NodeFlowOut);
                 }
+                Console.WriteLine("result: {0}", IsOK);
             }
             catch (Exception e)
             {

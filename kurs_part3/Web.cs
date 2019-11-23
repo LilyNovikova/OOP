@@ -1,53 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using kurs_part3;
 
 namespace kurs_part3
 {
     public class Web
     {
-        private string SourceName;
-        private string SinkName;
-        private Node source;
-        private Node sink;
-        private Edge[] edges; //array of pointers to edges
-        int number_edges, number_nodes;
-
-        public int GetNumberEdges() { return number_edges; }
-        public int GetNumberNodes() { return number_nodes; }
-
-        public Node GetSource() { return source; }
-
-        public void ResShowInWidth(Node current)
+        private string _SourceName;
+        public string SourceName
         {
-            for (int i = 0; i < current.getNumberOut(); i++)
+            get
             {
-                Console.Write(current.GetEdgesOut()[i]);
-                ResShowInWidth(current.GetEdgesOut()[i].GetEnd());
+                return _SourceName;
+            }
+            set
+            {
+                if (value == null) { throw new ArgumentNullException("Source name is null"); }
+                _SourceName = value;
             }
         }
+        private string _SinkName;
+        public string SinkName
+        {
+            get
+            {
+                return _SinkName;
+            }
+            set
+            {
+                if (value == null) { throw new ArgumentNullException("Sink name is null"); }
+                _SinkName = value;
+            }
+        }
+        private Node Source;
+        private Node Sink;
+        public Edge[] Edges { get; private set; }//array of pointers to edges
+        public int NumberEdges { get; private set; }
+        public int NumberNodes { get; private set; }
 
         public Node[] GetAllNodes()
         {
-            if (source.Exist())
+            if (Source.Exist())
             {
                 Node[] res = new Node[1];
-                res[0] = source;
+                res[0] = Source;
                 int num = 1;
-                for (int i = 0; i < number_edges; i++)
+                for (int i = 0; i < NumberEdges; i++)
                 {
                     bool flag = true;
                     for (int j = 0; j < num && flag; j++)
-                        if (edges[i].GetEnd() == res[j])
+                        if (Edges[i].End == res[j])
                             flag = false;
                     if (flag)
                     {
                         res = Utils<Node>.ResizeArray(res, (uint)res.Length + 1);
-                        res[res.Length - 1] = edges[i].GetEnd();
+                        res[res.Length - 1] = Edges[i].End;
                         //cout << res[num]->name << "  ";
                         num++;
                     }
@@ -59,39 +64,23 @@ namespace kurs_part3
 
         public Web()
         {
-            edges = new Edge[0];
-            number_edges = 0;
-            number_nodes = 0;
-            SourceName = null;
-            SinkName = null;
+            Edges = new Edge[0];
+            NumberEdges = 0;
+            NumberNodes = 0;
         }
 
         public Web(string WebSourceName, string WebSinkName)
         {
             SourceName = (string)WebSourceName.Clone();
             SinkName = (string)WebSinkName.Clone();
-            number_edges = 0;
-            number_nodes = 0;
+            NumberEdges = 0;
+            NumberNodes = 0;
         }
 
-        public string getSourceName() { return SourceName; }
-        public string getSinkName() { return SinkName; }
-
-        public void SetSourceName(string WebSourceName)
-        {
-            if (WebSourceName == null) throw new ArgumentNullException();
-            SourceName = WebSourceName;
-        }
-
-        public void SetSinkName(string WebSinkName)
-        {
-            if (WebSinkName == null) throw new ArgumentNullException();
-            SinkName = WebSinkName;
-        }
 
         public bool IsEmpty()
         {
-            if (number_edges > 0) return false;
+            if (NumberEdges > 0) return false;
             return true;
         }
 
@@ -104,64 +93,64 @@ namespace kurs_part3
             if ((NewBegin != NewEnd) && NewBandwidth > 0)
             {
                 bool create = true;
-                bool new_end_node = true, new_begin_node = true;
-                Edge new_edge = new Edge(NewBandwidth);
+                bool NewEndNode = true, NewBeginNode = true;
+                Edge NewEdge = new Edge(NewBandwidth);
 
-                for (int i = 0; i < number_edges && create && edges != null; i++)    //find out if nodes with this name exist
+                for (int i = 0; i < NumberEdges && create && Edges != null; i++)    //find out if nodes with this name exist
                 {
                     //if such edge alreadry exist
-                    if (edges[i].GetBegin().GetName() == NewBegin && edges[i].GetEnd().GetName()
-                        == NewEnd && edges[i].GetBandwidth() == NewBandwidth) create = false;
+                    if (Edges[i].Begin.Name == NewBegin && Edges[i].End.Name
+                        == NewEnd && Edges[i].Bandwidth == NewBandwidth) create = false;
 
                     //if any node already exist
-                    if (edges[i].GetBegin().GetName().Equals(NewBegin))
+                    if (Edges[i].Begin.Name.Equals(NewBegin))
                     {
-                        new_edge.SetBegin(edges[i].GetBegin());
-                        new_begin_node = false;
+                        NewEdge.Begin = Edges[i].Begin;
+                        NewBeginNode = false;
                     }
-                    if (edges[i].GetEnd().GetName().Equals(NewBegin))
+                    if (Edges[i].End.Name.Equals(NewBegin))
                     {
-                        new_edge.SetBegin(edges[i].GetEnd());
-                        new_begin_node = false;
+                        NewEdge.Begin = Edges[i].End;
+                        NewBeginNode = false;
                     }
 
-                    if (edges[i].GetBegin().GetName().Equals(NewEnd))
+                    if (Edges[i].Begin.Name.Equals(NewEnd))
                     {
-                        new_edge.SetEnd(edges[i].GetBegin());
-                        new_end_node = false;
+                        NewEdge.End = Edges[i].Begin;
+                        NewEndNode = false;
                     }
-                    if (edges[i].GetEnd().GetName().Equals(NewEnd))
+                    if (Edges[i].End.Name.Equals(NewEnd))
                     {
-                        new_edge.SetEnd(edges[i].GetEnd());
-                        new_end_node = false;
+                        NewEdge.End = Edges[i].End;
+                        NewEndNode = false;
                     }
                 }
 
                 if (create)
                 {
-                    if (new_begin_node)
+                    if (NewBeginNode)
                     {
-                        new_edge.SetBegin(new Node(NewBegin));
-                        number_nodes++;
+                        NewEdge.Begin = new Node(NewBegin);
+                        NumberNodes++;
                     }
-                    if (new_end_node)
+                    if (NewEndNode)
                     {
-                        new_edge.SetEnd(new Node(NewEnd));
-                        number_nodes++;
+                        NewEdge.End = new Node(NewEnd);
+                        NumberNodes++;
                     }
 
                     if (NewBegin.Equals(SourceName))
-                        source = new_edge.GetBegin();
+                        Source = NewEdge.Begin;
                     if (NewEnd.Equals(SinkName))
-                        sink = new_edge.GetEnd();
+                        Sink = NewEdge.End;
 
                     //initialize edge to nodes
-                    new_edge.GetBegin().addEdgeOut(new_edge);
-                    new_edge.GetEnd().addEdgeIn(new_edge);
+                    NewEdge.Begin.AddEdgeOut(NewEdge);
+                    NewEdge.End.AddEdgeIn(NewEdge);
 
-                    edges = Utils<Edge>.ResizeArray(edges, (uint)edges.Length + 1);
-                    edges[edges.Length - 1] = new_edge;
-                    number_edges++;
+                    Edges = Utils<Edge>.ResizeArray(Edges, (uint)Edges.Length + 1);
+                    Edges[Edges.Length - 1] = NewEdge;
+                    NumberEdges++;
 
                 }
                 else
@@ -174,118 +163,102 @@ namespace kurs_part3
             }
         }
 
-        public void FordFulkerson()
+        public void FordFulkersonAlgorithm()
         {
-            if (!SourceName.Equals(source.GetName())) throw new ArgumentNullException("No source in the web");
-            if (!SinkName.Equals(sink.GetName())) throw new ArgumentNullException("No sink in the web");
+            if (!SourceName.Equals(Source.Name)) throw new ArgumentNullException("No source in the web");
+            if (!SinkName.Equals(Sink.Name)) throw new ArgumentNullException("No sink in the web");
 
             Edge[] path = new Edge[0];
             bool IsWayFound = false;
-            path = source.FindWay(sink, ref path, out IsWayFound);//find a find_way way from source to sink
+            path = Source.FindWay(Sink, ref path, out IsWayFound);//find a find_way way from source to sink
 
             if (path.Length <= 1) throw new Exception("Can't find way from source to sink");
             while (IsWayFound)
             {
                 //finding min flow
-                int MinBandwidth = path[0].GetBandwidth() - path[0].GetFlow();
+                int MinBandwidth = path[0].Bandwidth - path[0].Flow;
                 bool PrevDirection = true;
                 for (int i = 1; i < path.Length; i++)
                 {
-                    if ((path[i - 1].GetEnd().GetName().Equals(path[i].GetBegin().GetName()) && PrevDirection) ||
-                        ((path[i - 1].GetBegin().GetName()).Equals(path[i].GetBegin().GetName()) && !PrevDirection))
+                    if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
+                        ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
                     {
-                        if (path[i].GetBandwidth() - path[i].GetFlow() < MinBandwidth)
+                        if (path[i].Bandwidth - path[i].Flow < MinBandwidth)
                         {
-                            MinBandwidth = path[i].GetBandwidth() - path[i].GetFlow();
+                            MinBandwidth = path[i].Bandwidth - path[i].Flow;
                         }
                         PrevDirection = true;
                     }
                     else
                     {
                         PrevDirection = false;
-                        if (path[i].GetFlow() < MinBandwidth)
+                        if (path[i].Flow < MinBandwidth)
                         {
-                            MinBandwidth = path[i].GetFlow();
+                            MinBandwidth = path[i].Flow;
                         }
                     }
                 }
 
-                path[0].SetFlow(path[0].GetFlow() + MinBandwidth);
+                path[0].Flow = path[0].Flow + MinBandwidth;
                 PrevDirection = true;
                 for (int i = 1; i < path.Length; i++)
                 {
-                    if ((path[i - 1].GetEnd().GetName().Equals(path[i].GetBegin().GetName()) && PrevDirection) ||
-                       ((path[i - 1].GetBegin().GetName()).Equals(path[i].GetBegin().GetName()) && !PrevDirection))
+                    if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
+                       ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
                     {
                         PrevDirection = true;
-                        path[i].SetFlow(path[i].GetFlow() + MinBandwidth);
+                        path[i].Flow = path[i].Flow + MinBandwidth;
                     }
                     else
                     {
                         PrevDirection = false;
-                        path[i].SetFlow(path[i].GetFlow() - MinBandwidth);
+                        path[i].Flow = path[i].Flow - MinBandwidth;
                     }
                 }
 
                 path = new Edge[0];
-                path = source.FindWay(sink, ref path, out IsWayFound);   //find a find_way way from source to sink
+                path = Source.FindWay(Sink, ref path, out IsWayFound);   //find a find_way way from source to sink
                 ////End of debug block////
             }
         }
 
-        public void ShowEdges()
-        {
-            for (int i = 0; i < number_edges; i++)
-                Console.WriteLine(edges[i]);
-        }
-
         public int SummFlow()
         {
-            if (SourceName.Equals(source.GetName()))
+            if (SourceName.Equals(Source.Name))
             {
                 int res = 0;
-                for (int i = 0; i < source.getNumberOut(); i++)
-                    res += source.GetEdgesOut()[i].GetFlow();
+                for (int i = 0; i < Source.NumberOut; i++)
+                    res += Source.EdgeOut[i].Flow;
                 return res;
             }
             else throw new Exception("No source node to count flow");
         }
 
-        public void from_file(string filename)
+        /*string format: "{BeginNode} {EndNode} {Bandwidth}"*/
+        public void AddEdges(string[] EdgesStringArray)
         {
-            StreamReader read = new StreamReader(filename);
-            //go to the beginning of the file
-
-            string str = read.ReadLine();
-            string[] str_array = str.Split(' ');
-            SourceName = str_array[0];
-            SinkName = str_array[1];
-            while (read.Peek() != -1)
+            foreach (string EdgeString in EdgesStringArray)
             {
-                str = read.ReadLine();
-                if (str.Length > 4)
+                string[] StrArray = EdgeString.Split(' ');
+                if (StrArray.Length > 2)
                 {
-                    string edge_in = null, edge_out = null;
-                    int bandwidth;
+                    string EdgeIn = null;
+                    string EdgeOut = null;
+                    int Bandwidth;
 
-                    str_array = str.Split(' ');
+                    EdgeOut = StrArray[0];
+                    EdgeIn = StrArray[1];
 
-                    edge_out = str_array[0];
-                    edge_in = str_array[1];
-
-                    //check if string str_array[2] contains nonnumeric symbols and cut them
-                    char[] char_arr = str_array[2].ToCharArray();
+                    //check if string StrArray[2] contains NonDigits and cut them
+                    char[] CharArr = StrArray[2].ToCharArray();
                     int i = 0;
-                    foreach (char c in char_arr)
+                    foreach (char c in CharArr)
                         if (c > '9' || c < '0') break;
                         else i++;
-                    bandwidth = int.Parse(str_array[2].Substring(0, i));
-                    AddEdge(edge_out, edge_in, bandwidth);
+                    Bandwidth = int.Parse(StrArray[2].Substring(0, i));
+                    AddEdge(EdgeOut, EdgeIn, Bandwidth);
                 }
-                //Console.WriteLine(str);
-
             }
-            read.Close();
         }
 
     }

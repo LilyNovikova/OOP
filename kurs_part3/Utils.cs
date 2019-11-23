@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace kurs_part3
+﻿namespace kurs_part3
 {
     public static class Utils<T>
     {      
@@ -22,6 +16,26 @@ namespace kurs_part3
                 }
             }
             return NewArray;
+        }
+
+        public static string ArrayToText(T[]array)
+        {
+            string text = "";
+            foreach(T item in array)
+            {
+                text += item.ToString() + '\n';
+            }
+            return text;
+        }
+
+        public static string ArrayToString(T[] array)
+        {
+            string text = "";
+            foreach (T item in array)
+            {
+                text += item.ToString() + ' ';
+            }
+            return text;
         }
     }
 }

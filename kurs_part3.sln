@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kurs_part3", "kurs_part3\kurs_part3.csproj", "{1CF1C891-3426-4F0A-8A42-F8C92827EAB7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B633657D-9F9B-4F38-A04D-8756A0ACD94C}"
+	ProjectSection(SolutionItems) = preProject
+		net.txt = net.txt
+		simple.txt = simple.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
