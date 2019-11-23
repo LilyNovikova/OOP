@@ -96,32 +96,35 @@ namespace kurs_part3
                 bool NewEndNode = true, NewBeginNode = true;
                 Edge NewEdge = new Edge(NewBandwidth);
 
-                for (int i = 0; i < NumberEdges && create && Edges != null; i++)    //find out if nodes with this name exist
+                foreach(Edge Edge in Edges)    //find out if nodes with this name exist
                 {
                     //if such edge alreadry exist
-                    if (Edges[i].Begin.Name == NewBegin && Edges[i].End.Name
-                        == NewEnd && Edges[i].Bandwidth == NewBandwidth) create = false;
-
+                    if (Edge.Begin.Name == NewBegin && Edges[i].End.Name
+                        == NewEnd && Edge.Bandwidth == NewBandwidth)
+                    {
+                        create = false;
+                        break;
+                    }
                     //if any node already exist
-                    if (Edges[i].Begin.Name.Equals(NewBegin))
+                    if (Edge.Begin.Name.Equals(NewBegin))
                     {
-                        NewEdge.Begin = Edges[i].Begin;
+                        NewEdge.Begin = Edge.Begin;
                         NewBeginNode = false;
                     }
-                    if (Edges[i].End.Name.Equals(NewBegin))
+                    if (Edge.End.Name.Equals(NewBegin))
                     {
-                        NewEdge.Begin = Edges[i].End;
+                        NewEdge.Begin = Edge.End;
                         NewBeginNode = false;
                     }
 
-                    if (Edges[i].Begin.Name.Equals(NewEnd))
+                    if (Edge.Begin.Name.Equals(NewEnd))
                     {
-                        NewEdge.End = Edges[i].Begin;
+                        NewEdge.End = Edge.Begin;
                         NewEndNode = false;
                     }
-                    if (Edges[i].End.Name.Equals(NewEnd))
+                    if (Edge.End.Name.Equals(NewEnd))
                     {
-                        NewEdge.End = Edges[i].End;
+                        NewEdge.End = Edge.End;
                         NewEndNode = false;
                     }
                 }
@@ -163,6 +166,54 @@ namespace kurs_part3
             }
         }
 
+        private int FindMinAdditionalFlow(Edge[] path)
+        {
+            int MinAddFlow = path[0].Bandwidth - path[0].Flow;
+            bool PrevDirection = true;
+            for (int i = 1; i < path.Length; i++)
+            {
+                if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
+                    ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
+                {
+                    if (path[i].Bandwidth - path[i].Flow < MinAddFlow)
+                    {
+                        MinAddFlow = path[i].Bandwidth - path[i].Flow;
+                    }
+                    PrevDirection = true;
+                }
+                else
+                {
+                    PrevDirection = false;
+                    if (path[i].Flow < MinAddFlow)
+                    {
+                        MinAddFlow = path[i].Flow;
+                    }
+                }
+            }
+            return MinAddFlow;
+        }
+
+        private Edge[] AddFlow(Edge[] path, int AdditionalFlow)
+        {
+            path[0].Flow = path[0].Flow + AdditionalFlow;
+            bool PrevDirection = true;
+            for (int i = 1; i < path.Length; i++)
+            {
+                if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
+                   ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
+                {
+                    PrevDirection = true;
+                    path[i].Flow = path[i].Flow + AdditionalFlow;
+                }
+                else
+                {
+                    PrevDirection = false;
+                    path[i].Flow = path[i].Flow - AdditionalFlow;
+                }
+            }
+            return path;
+        }
+ 
         public void FordFulkersonAlgorithm()
         {
             if (!SourceName.Equals(Source.Name)) throw new ArgumentNullException("No source in the web");
@@ -176,49 +227,13 @@ namespace kurs_part3
             while (IsWayFound)
             {
                 //finding min flow
-                int MinBandwidth = path[0].Bandwidth - path[0].Flow;
-                bool PrevDirection = true;
-                for (int i = 1; i < path.Length; i++)
-                {
-                    if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
-                        ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
-                    {
-                        if (path[i].Bandwidth - path[i].Flow < MinBandwidth)
-                        {
-                            MinBandwidth = path[i].Bandwidth - path[i].Flow;
-                        }
-                        PrevDirection = true;
-                    }
-                    else
-                    {
-                        PrevDirection = false;
-                        if (path[i].Flow < MinBandwidth)
-                        {
-                            MinBandwidth = path[i].Flow;
-                        }
-                    }
-                }
+                int AdditionalFlow = FindMinAdditionalFlow(path);
 
-                path[0].Flow = path[0].Flow + MinBandwidth;
-                PrevDirection = true;
-                for (int i = 1; i < path.Length; i++)
-                {
-                    if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
-                       ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
-                    {
-                        PrevDirection = true;
-                        path[i].Flow = path[i].Flow + MinBandwidth;
-                    }
-                    else
-                    {
-                        PrevDirection = false;
-                        path[i].Flow = path[i].Flow - MinBandwidth;
-                    }
-                }
+                //setting new flows for the path
+                path = AddFlow(path, AdditionalFlow);
 
                 path = new Edge[0];
                 path = Source.FindWay(Sink, ref path, out IsWayFound);   //find a find_way way from source to sink
-                ////End of debug block////
             }
         }
 

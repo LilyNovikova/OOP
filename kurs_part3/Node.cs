@@ -74,7 +74,7 @@ namespace kurs_part3
             if (EdgeOut.Length != 0 || EdgeIn.Length != 0)
             {
                 Edge[] CurrentWay = new Edge[0];
-                //
+                //find next edge in EdgeOut
                 for (int i = 0; i < NumberOut; i++)
                 {
                     bool IsNoCycles = true;
@@ -95,7 +95,7 @@ namespace kurs_part3
                         way = Utils<Edge>.ResizeArray(way, WayLength--);
                     }
                 }
-                //
+                //find next edge in EdgeIn
                 for (int i = 0; i < NumberIn; i++)
                 {
                     bool IsNoCycles = true;
