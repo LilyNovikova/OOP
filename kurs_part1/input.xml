@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<input>
+  <Car>
+    <item>Audi;S8;300;2000;2;700;80000;4</item>
+    <item>Nissan;Cube;200;2500;5;400;20000;4</item>
+  </Car>
+  <Boat>
+    <item>Boat1;Incredible;150;500;8;100;10000;400</item>
+    <item>Boat1;Boring;10;400;10;100;5000;600</item>
+  </Boat>
+  <Aircraft>
+    <item>Airbus;a321;900;11000;200;10000;500000;12000</item>
+    <item>Airbus;a319;800;10000;180;11000;400000;10000</item>
+  </Aircraft>
+  <Train>
+    <item>Train1;Usual;100;30000;700;3000;90000;20</item>
+    <item>Sapsan;Model1;400;40000;400;7000;100000;8</item>
+  </Train>
+</input>
