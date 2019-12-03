@@ -99,7 +99,7 @@ namespace kurs_part3
                 foreach(Edge Edge in Edges)    //find out if nodes with this name exist
                 {
                     //if such edge alreadry exist
-                    if (Edge.Begin.Name == NewBegin && Edges[i].End.Name
+                    if (Edge.Begin.Name == NewBegin && Edge.End.Name
                         == NewEnd && Edge.Bandwidth == NewBandwidth)
                     {
                         create = false;
