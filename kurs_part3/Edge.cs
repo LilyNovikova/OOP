@@ -27,18 +27,6 @@ namespace kurs_part3
             Flow = 0;
         }
 
-        public Edge(Node BeginNode, Node EndNode, int EdgeBandwidth)
-        {
-            if (!BeginNode.Exist()) throw new ArgumentNullException("Nonexisting begin node");
-            if (!EndNode.Exist()) throw new ArgumentNullException("Nonexisting end node");
-            Begin = BeginNode.copy();
-            End = EndNode.copy();
-            Bandwidth = EdgeBandwidth;
-            Flow = 0;
-        }
-
-        ~Edge() { }
-
     }
 
 }

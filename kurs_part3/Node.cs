@@ -24,9 +24,7 @@ namespace kurs_part3
             return node.Name.Equals(Name);
         }
 
-        public Node() { Name = null; NumberOut = 0; NumberIn = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; }
         public Node(string NewName) { Name = (string)NewName.Clone(); NumberOut = 0; NumberIn = 0; EdgeOut = new Edge[0]; EdgeIn = new Edge[0]; Count++; }
-        ~Node() { }
 
         public void AddEdgeIn(Edge NewEdge)
         {
@@ -46,16 +44,6 @@ namespace kurs_part3
         {
             if (Name != null) return true;
             return false;
-        }
-
-        public Node copy()
-        {
-            Node NewNode = new Node(Name);
-            NewNode.EdgeIn = EdgeIn;
-            NewNode.EdgeOut = EdgeOut;
-            NewNode.NumberIn = NumberIn;
-            NewNode.NumberOut = NumberOut;
-            return NewNode;
         }
 
         //finding way from this node to the sink node

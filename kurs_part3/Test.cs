@@ -2,13 +2,13 @@
 
 namespace kurs_part3
 {
-    class Test
+    public class Test
     {
         public static string InputFileName = "net.txt";
         public static Web web;
         public static string[] FileContent;
 
-        public static void Main()
+        public static Web Main1()
         {
             try
             {
@@ -64,10 +64,12 @@ namespace kurs_part3
                     Console.WriteLine(nodes[i].Name + ": in=" + NodeFlowIn + ", out=" + NodeFlowOut);
                 }
                 Console.WriteLine("result: {0}", IsOK);
+                return web;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return null;
             }
         }
     }

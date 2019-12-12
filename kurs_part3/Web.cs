@@ -61,14 +61,12 @@ namespace kurs_part3
             }
             throw new ArgumentNullException("This web has no nodes");
         }
-
         public Web()
         {
             Edges = new Edge[0];
             NumberEdges = 0;
             NumberNodes = 0;
         }
-
         public Web(string WebSourceName, string WebSinkName)
         {
             SourceName = (string)WebSourceName.Clone();
@@ -77,18 +75,7 @@ namespace kurs_part3
             NumberNodes = 0;
         }
 
-
-        public bool IsEmpty()
-        {
-            if (NumberEdges > 0) return false;
-            return true;
-        }
-
-        ~Web()
-        {
-        }
-
-        private void AddEdge(string NewBegin, string NewEnd, int NewBandwidth)
+        public void AddEdge(string NewBegin, string NewEnd, int NewBandwidth)
         {
             if ((NewBegin != NewEnd) && NewBandwidth > 0)
             {
@@ -223,7 +210,7 @@ namespace kurs_part3
             bool IsWayFound = false;
             path = Source.FindWay(Sink, ref path, out IsWayFound);//find a find_way way from source to sink
 
-            if (path.Length <= 1) throw new Exception("Can't find way from source to sink");
+            if (path.Length < 1) throw new Exception("Can't find way from source to sink");
             while (IsWayFound)
             {
                 //finding min flow

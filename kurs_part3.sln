@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		simple.txt = simple.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{87EA6DE8-DE99-4FB9-8BF1-B42D382317C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1CF1C891-3426-4F0A-8A42-F8C92827EAB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CF1C891-3426-4F0A-8A42-F8C92827EAB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CF1C891-3426-4F0A-8A42-F8C92827EAB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87EA6DE8-DE99-4FB9-8BF1-B42D382317C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87EA6DE8-DE99-4FB9-8BF1-B42D382317C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87EA6DE8-DE99-4FB9-8BF1-B42D382317C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87EA6DE8-DE99-4FB9-8BF1-B42D382317C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

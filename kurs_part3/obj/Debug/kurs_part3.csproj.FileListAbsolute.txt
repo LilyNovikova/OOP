@@ -1,6 +1,6 @@
-D:\prog\OOP\kurs_part3\kurs_part3\bin\Debug\kurs_part3.exe.config
-D:\prog\OOP\kurs_part3\kurs_part3\bin\Debug\kurs_part3.exe
 D:\prog\OOP\kurs_part3\kurs_part3\bin\Debug\kurs_part3.pdb
 D:\prog\OOP\kurs_part3\kurs_part3\obj\Debug\kurs_part3.csprojResolveAssemblyReference.cache
-D:\prog\OOP\kurs_part3\kurs_part3\obj\Debug\kurs_part3.exe
 D:\prog\OOP\kurs_part3\kurs_part3\obj\Debug\kurs_part3.pdb
+D:\prog\OOP\kurs_part3\kurs_part3\bin\Debug\kurs_part3.dll.config
+D:\prog\OOP\kurs_part3\kurs_part3\bin\Debug\kurs_part3.dll
+D:\prog\OOP\kurs_part3\kurs_part3\obj\Debug\kurs_part3.dll
