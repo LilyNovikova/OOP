@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+  <Admin>
+    <MaxDisperciaPercent>50</MaxDisperciaPercent>
+    <RequestReceivingFrequency>60</RequestReceivingFrequency>
+    <ImitationDuration>14</ImitationDuration>
+    <MaxWaitingTime>7</MaxWaitingTime>
+    <MaxTasksInRequest>8</MaxTasksInRequest>
+  </Admin>
+  <Worker>
+    <WagePercent>35</WagePercent>
+    <MinimumWage>1000</MinimumWage>
+  </Worker>
+  <Schedule>
+    <StartHour>10</StartHour>
+    <UsualOpenedTime>12</UsualOpenedTime>
+    <WeekendOpenedTime>8</WeekendOpenedTime>
+  </Schedule>
+</config>
