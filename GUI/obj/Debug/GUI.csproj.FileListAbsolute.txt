@@ -1,0 +1,11 @@
+D:\prog\OOP\kurs_part2\GUI\bin\Debug\GUI.exe.config
+D:\prog\OOP\kurs_part2\GUI\bin\Debug\GUI.exe
+D:\prog\OOP\kurs_part2\GUI\bin\Debug\GUI.pdb
+D:\prog\OOP\kurs_part2\GUI\bin\Debug\kurs_part2.exe
+D:\prog\OOP\kurs_part2\GUI\bin\Debug\kurs_part2.pdb
+D:\prog\OOP\kurs_part2\GUI\obj\Debug\GUI.csprojResolveAssemblyReference.cache
+D:\prog\OOP\kurs_part2\GUI\obj\Debug\GUI.Form1.resources
+D:\prog\OOP\kurs_part2\GUI\obj\Debug\GUI.Properties.Resources.resources
+D:\prog\OOP\kurs_part2\GUI\obj\Debug\GUI.csproj.GenerateResource.Cache
+D:\prog\OOP\kurs_part2\GUI\obj\Debug\GUI.exe
+D:\prog\OOP\kurs_part2\GUI\obj\Debug\GUI.pdb

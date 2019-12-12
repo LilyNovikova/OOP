@@ -1,0 +1,12 @@
+D:\prog\OOP\kurs_part2\bin\Debug\kurs_part2.exe.config
+D:\prog\OOP\kurs_part2\bin\Debug\kurs_part2.exe
+D:\prog\OOP\kurs_part2\bin\Debug\kurs_part2.pdb
+D:\prog\OOP\kurs_part2\obj\Debug\kurs_part2.csprojResolveAssemblyReference.cache
+D:\prog\OOP\kurs_part2\obj\Debug\kurs_part2.exe
+D:\prog\OOP\kurs_part2\obj\Debug\kurs_part2.pdb
+D:\prog\OOP\kurs_part2\kurs_part2\bin\Debug\kurs_part2.exe.config
+D:\prog\OOP\kurs_part2\kurs_part2\bin\Debug\kurs_part2.exe
+D:\prog\OOP\kurs_part2\kurs_part2\bin\Debug\kurs_part2.pdb
+D:\prog\OOP\kurs_part2\kurs_part2\obj\Debug\kurs_part2.csprojResolveAssemblyReference.cache
+D:\prog\OOP\kurs_part2\kurs_part2\obj\Debug\kurs_part2.exe
+D:\prog\OOP\kurs_part2\kurs_part2\obj\Debug\kurs_part2.pdb
