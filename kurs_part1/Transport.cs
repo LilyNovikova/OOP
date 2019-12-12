@@ -1,4 +1,5 @@
 ﻿using System;
+
 public class Transport
 {
     protected const int NumberOfProperties = 7;
@@ -10,12 +11,12 @@ public class Transport
     public double Capacity { get; protected set; }
     public double Price { get; protected set; }
 
-    public Transport(string _name, string _model, double _speed, double _mass, int _seat, double _capacity, double _price)
+    public Transport(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price)
     {
         Name = _name;
         Model = _model;
         Speed = _speed;
-        Weight = _mass;
+        Weight = _weight;
         Seats = _seat;
         Capacity = _capacity;
         Price = _price;
@@ -45,12 +46,12 @@ public class Transport
 
     public virtual string GetAddPropertyString() { return ""; }
 }
-public class Car : Transport
+public class Car : Transport 
 {
     private const int NumberOfAdditionalProperties = 1;
     private int Wheels;
-    public Car(string _name, string _model, double _speed, double _mass, int _seat, double _capacity, double _price, int _wheels)
-        : base(_name, _model, _speed, _mass, _seat, _capacity, _price)
+    public Car(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _wheels)
+        : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
     {
         Wheels = _wheels;
     }
@@ -74,8 +75,8 @@ public class Boat : Transport
 {
     private const int NumberOfAdditionalProperties = 1;
     private int Displacement;
-    public Boat(string _name, string _model, double _speed, double _mass, int _seat, double _capacity, double _price, int _displacement)
-         : base(_name, _model, _speed, _mass, _seat, _capacity, _price)
+    public Boat(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _displacement)
+         : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
     {
         Displacement = _displacement;
     }
@@ -99,11 +100,11 @@ public class Boat : Transport
 public class Aircraft : Transport
 {
     private const int NumberOfAdditionalProperties = 1;
-    private int Height;
-    public Aircraft(string _name, string _model, double _speed, double _mass, int _seat, double _capacity, double _price, int _height)
-         : base(_name, _model, _speed, _mass, _seat, _capacity, _price)
+    private int MaxHeight;
+    public Aircraft(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _maxheight)
+         : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
     {
-        Height = _height;
+        MaxHeight = _maxheight;
     }
 
     public Aircraft(string str) : base(str)
@@ -114,19 +115,19 @@ public class Aircraft : Transport
             throw new ArgumentException("Not enough arguments");
         }
 
-        Height = int.Parse(DataArray[NumberOfProperties]);
+        MaxHeight = int.Parse(DataArray[NumberOfProperties]);
     }
     public override string GetAddPropertyString()
     {
-        return "Height"+ Height;
+        return "MaxHeight "+ MaxHeight;
     }
 }
 public class Train : Transport
 {
     private const int NumberOfAdditionalProperties = 1;
     private int Wagons;
-    public Train(string _name, string _model, double _speed, double _mass, int _seat, double _capacity, double _price, int _wagons)
-         : base(_name, _model, _speed, _mass, _seat, _capacity, _price)
+    public Train(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _wagons)
+         : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
     {
         Wagons = _wagons;
     }

@@ -6,7 +6,7 @@ namespace kurs_part1
 {
     public class InputParser
     {
-        private static string InputFileName = "D:\\prog\\OOP\\kurs_part1\\input.xml";//FileUtils.SolutionDir + "input.xml";
+        private static string InputFileName = FileUtils.SolutionDir + "input.xml";
         public static List<Car> Cars { get; private set; } = new List<Car>();
         public static List<Boat> Boats { get; private set; } = new List<Boat>();
         public static List<Aircraft> Aircrafts { get; private set; } = new List<Aircraft>();

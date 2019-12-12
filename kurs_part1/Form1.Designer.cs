@@ -56,6 +56,8 @@ namespace kurs_part1
             // 
             // TransportTypeSelection
             // 
+            this.TransportTypeSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TransportTypeSelection.FormattingEnabled = true;
             this.TransportTypeSelection.Items.AddRange(new object[] {
             "Car",
@@ -64,16 +66,18 @@ namespace kurs_part1
             "Train"});
             this.TransportTypeSelection.Location = new System.Drawing.Point(12, 12);
             this.TransportTypeSelection.Name = "TransportTypeSelection";
-            this.TransportTypeSelection.Size = new System.Drawing.Size(135, 24);
+            this.TransportTypeSelection.Size = new System.Drawing.Size(270, 24);
             this.TransportTypeSelection.TabIndex = 0;
             this.TransportTypeSelection.Text = "Car";
             this.TransportTypeSelection.SelectedIndexChanged += new System.EventHandler(this.TransportType_SelectedIndexChanged);
             // 
             // NameLabel
             // 
+            this.NameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.NameLabel.AutoSize = true;
             this.NameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NameLabel.Location = new System.Drawing.Point(268, 60);
+            this.NameLabel.Location = new System.Drawing.Point(113, 135);
             this.NameLabel.Name = "NameLabel";
             this.NameLabel.Size = new System.Drawing.Size(68, 25);
             this.NameLabel.TabIndex = 2;
@@ -81,8 +85,9 @@ namespace kurs_part1
             // 
             // ModelLabel
             // 
+            this.ModelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ModelLabel.AutoSize = true;
-            this.ModelLabel.Location = new System.Drawing.Point(17, 130);
+            this.ModelLabel.Location = new System.Drawing.Point(17, 176);
             this.ModelLabel.Name = "ModelLabel";
             this.ModelLabel.Size = new System.Drawing.Size(54, 17);
             this.ModelLabel.TabIndex = 3;
@@ -90,8 +95,9 @@ namespace kurs_part1
             // 
             // SpeedLabel
             // 
+            this.SpeedLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SpeedLabel.AutoSize = true;
-            this.SpeedLabel.Location = new System.Drawing.Point(17, 190);
+            this.SpeedLabel.Location = new System.Drawing.Point(17, 207);
             this.SpeedLabel.Name = "SpeedLabel";
             this.SpeedLabel.Size = new System.Drawing.Size(57, 17);
             this.SpeedLabel.TabIndex = 4;
@@ -99,8 +105,9 @@ namespace kurs_part1
             // 
             // WeightLabel
             // 
+            this.WeightLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.WeightLabel.AutoSize = true;
-            this.WeightLabel.Location = new System.Drawing.Point(17, 257);
+            this.WeightLabel.Location = new System.Drawing.Point(17, 236);
             this.WeightLabel.Name = "WeightLabel";
             this.WeightLabel.Size = new System.Drawing.Size(60, 17);
             this.WeightLabel.TabIndex = 5;
@@ -108,8 +115,9 @@ namespace kurs_part1
             // 
             // SeatsLabel
             // 
+            this.SeatsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SeatsLabel.AutoSize = true;
-            this.SeatsLabel.Location = new System.Drawing.Point(342, 130);
+            this.SeatsLabel.Location = new System.Drawing.Point(17, 270);
             this.SeatsLabel.Name = "SeatsLabel";
             this.SeatsLabel.Size = new System.Drawing.Size(52, 17);
             this.SeatsLabel.TabIndex = 6;
@@ -117,8 +125,9 @@ namespace kurs_part1
             // 
             // CapacityLabel
             // 
+            this.CapacityLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.CapacityLabel.AutoSize = true;
-            this.CapacityLabel.Location = new System.Drawing.Point(342, 190);
+            this.CapacityLabel.Location = new System.Drawing.Point(17, 303);
             this.CapacityLabel.Name = "CapacityLabel";
             this.CapacityLabel.Size = new System.Drawing.Size(70, 17);
             this.CapacityLabel.TabIndex = 7;
@@ -126,8 +135,9 @@ namespace kurs_part1
             // 
             // PriceLabel
             // 
+            this.PriceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.PriceLabel.AutoSize = true;
-            this.PriceLabel.Location = new System.Drawing.Point(342, 257);
+            this.PriceLabel.Location = new System.Drawing.Point(17, 338);
             this.PriceLabel.Name = "PriceLabel";
             this.PriceLabel.Size = new System.Drawing.Size(48, 17);
             this.PriceLabel.TabIndex = 8;
@@ -135,8 +145,10 @@ namespace kurs_part1
             // 
             // AddPropertyLabel
             // 
+            this.AddPropertyLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddPropertyLabel.AutoSize = true;
-            this.AddPropertyLabel.Location = new System.Drawing.Point(17, 371);
+            this.AddPropertyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AddPropertyLabel.Location = new System.Drawing.Point(17, 368);
             this.AddPropertyLabel.Name = "AddPropertyLabel";
             this.AddPropertyLabel.Size = new System.Drawing.Size(132, 17);
             this.AddPropertyLabel.TabIndex = 9;
@@ -144,17 +156,20 @@ namespace kurs_part1
             // 
             // TransportSelection
             // 
+            this.TransportSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TransportSelection.FormattingEnabled = true;
-            this.TransportSelection.Location = new System.Drawing.Point(192, 12);
+            this.TransportSelection.Location = new System.Drawing.Point(12, 58);
             this.TransportSelection.Name = "TransportSelection";
-            this.TransportSelection.Size = new System.Drawing.Size(383, 24);
+            this.TransportSelection.Size = new System.Drawing.Size(270, 24);
             this.TransportSelection.TabIndex = 10;
             this.TransportSelection.SelectedIndexChanged += new System.EventHandler(this.TransportSelection_SelectedIndexChanged);
             // 
             // LModel
             // 
+            this.LModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LModel.AutoSize = true;
-            this.LModel.Location = new System.Drawing.Point(112, 130);
+            this.LModel.Location = new System.Drawing.Point(112, 176);
             this.LModel.Name = "LModel";
             this.LModel.Size = new System.Drawing.Size(13, 17);
             this.LModel.TabIndex = 11;
@@ -162,8 +177,9 @@ namespace kurs_part1
             // 
             // LSpeed
             // 
+            this.LSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LSpeed.AutoSize = true;
-            this.LSpeed.Location = new System.Drawing.Point(115, 190);
+            this.LSpeed.Location = new System.Drawing.Point(112, 207);
             this.LSpeed.Name = "LSpeed";
             this.LSpeed.Size = new System.Drawing.Size(13, 17);
             this.LSpeed.TabIndex = 12;
@@ -172,8 +188,9 @@ namespace kurs_part1
             // 
             // LWeight
             // 
+            this.LWeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LWeight.AutoSize = true;
-            this.LWeight.Location = new System.Drawing.Point(115, 257);
+            this.LWeight.Location = new System.Drawing.Point(112, 236);
             this.LWeight.Name = "LWeight";
             this.LWeight.Size = new System.Drawing.Size(13, 17);
             this.LWeight.TabIndex = 13;
@@ -181,8 +198,9 @@ namespace kurs_part1
             // 
             // LSeats
             // 
+            this.LSeats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LSeats.AutoSize = true;
-            this.LSeats.Location = new System.Drawing.Point(438, 130);
+            this.LSeats.Location = new System.Drawing.Point(112, 270);
             this.LSeats.Name = "LSeats";
             this.LSeats.Size = new System.Drawing.Size(13, 17);
             this.LSeats.TabIndex = 14;
@@ -190,8 +208,9 @@ namespace kurs_part1
             // 
             // LCapacity
             // 
+            this.LCapacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LCapacity.AutoSize = true;
-            this.LCapacity.Location = new System.Drawing.Point(454, 190);
+            this.LCapacity.Location = new System.Drawing.Point(112, 303);
             this.LCapacity.Name = "LCapacity";
             this.LCapacity.Size = new System.Drawing.Size(13, 17);
             this.LCapacity.TabIndex = 15;
@@ -199,8 +218,9 @@ namespace kurs_part1
             // 
             // LPrice
             // 
+            this.LPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LPrice.AutoSize = true;
-            this.LPrice.Location = new System.Drawing.Point(437, 257);
+            this.LPrice.Location = new System.Drawing.Point(112, 338);
             this.LPrice.Name = "LPrice";
             this.LPrice.Size = new System.Drawing.Size(13, 17);
             this.LPrice.TabIndex = 16;
@@ -208,8 +228,10 @@ namespace kurs_part1
             // 
             // LAddProperty
             // 
+            this.LAddProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LAddProperty.AutoSize = true;
-            this.LAddProperty.Location = new System.Drawing.Point(192, 371);
+            this.LAddProperty.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LAddProperty.Location = new System.Drawing.Point(168, 368);
             this.LAddProperty.Name = "LAddProperty";
             this.LAddProperty.Size = new System.Drawing.Size(13, 17);
             this.LAddProperty.TabIndex = 17;
@@ -219,7 +241,7 @@ namespace kurs_part1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 441);
+            this.ClientSize = new System.Drawing.Size(331, 405);
             this.Controls.Add(this.LAddProperty);
             this.Controls.Add(this.LPrice);
             this.Controls.Add(this.LCapacity);
