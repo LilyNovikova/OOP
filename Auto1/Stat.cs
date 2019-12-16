@@ -89,14 +89,14 @@ namespace Auto1
             if (DaysPassed < 1)
             {
                 AvgQueue = CurrentQueue;
-                AvgWagePerDay = CurrentProfit * WagePercent / 100;
+                AvgWagePerDay = CurrentProfit * WagePercent / 100 / WorkersAmount;
                 AvgWaitingTime = CurrentWaitingTime;
                 AvgWorkingPercent = CurrentWorkingPercent;
             }
             else
             {
                 AvgQueue = AvgQueue / (DaysPassed + 1) * DaysPassed + CurrentQueue / (DaysPassed + 1);
-                AvgWagePerDay = AvgWagePerDay / (DaysPassed + 1) * DaysPassed + CurrentProfit * WagePercent / 100 / (DaysPassed + 1);
+                AvgWagePerDay = AvgWagePerDay / (DaysPassed + 1) * DaysPassed + (CurrentProfit * WagePercent / 100 / (DaysPassed + 1)) / WorkersAmount;
                 AvgWaitingTime = AvgWaitingTime / (DaysPassed + 1) * DaysPassed + CurrentWaitingTime / (DaysPassed + 1);
                 AvgWorkingPercent = AvgWorkingPercent / (DaysPassed + 1) * DaysPassed + CurrentWorkingPercent / (DaysPassed + 1);
             }

@@ -106,7 +106,7 @@ namespace GUI
         {
             try
             {
-                OverdueLabel.Text = "R#" + Request.Id + " is overdue" + Environment.NewLine + "Lost Profit: " + Request.Price;
+                OverdueLabel.Text = "R#" + Request.Id + " is overdue" + Environment.NewLine + "Lost Profit: " + Request.FutureAddPrice;
             }
             catch (InvalidOperationException)
             {
@@ -118,7 +118,7 @@ namespace GUI
         {
             try
             {
-                NewRequestLabel.Text = "New request R#" + Request.Id + Environment.NewLine + "Tasks: " + Request.TasksToDoList.Count + Environment.NewLine + "Price: " + Request.Price;
+                NewRequestLabel.Text = "New request R#" + Request.Id + Environment.NewLine + "Tasks: " + Request.TasksToDoList.Count + Environment.NewLine + "Price: " + Request.FutureAddPrice;
             }
             catch (InvalidOperationException)
             {

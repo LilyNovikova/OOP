@@ -21,6 +21,7 @@ namespace Auto1
                 return (FinishTime == -1 ? Admin.Now : FinishTime) - InitTime;
             }
         }
+        public int FutureAddPrice { get; private set; } = 0;
         public int Price { get; private set; } = 0;
         public List<Task> TasksToDoList;
         public List<Task> FinishedTasksList;
@@ -88,7 +89,7 @@ namespace Auto1
             Task.ConnectWithRequest(this);
             TasksToDoList.Add(Task);
             InitTime = Admin.Now;
-            Price += Task.Price;
+            FutureAddPrice += Task.Price;
         }
 
         public void Start(Task Task)
@@ -111,6 +112,8 @@ namespace Auto1
             }
             ProcessingRoom = null;
             IsProcessing = false;
+            FutureAddPrice -= Task.Price;
+            Price += Task.Price;
         }
 
         public string ToString1()
