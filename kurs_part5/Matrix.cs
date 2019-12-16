@@ -12,7 +12,7 @@ namespace Functions
         private int height;
         private double[,] M;
         public Matrix() { }
-        public string Print()
+        public override string ToString()
         {
             string str = "";
             for (int i = 0; i < this.height; i++)

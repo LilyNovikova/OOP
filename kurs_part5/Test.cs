@@ -8,7 +8,7 @@ namespace Functions
 {
     class Test
     {
-        public static void Main()
+        public static void Main1()
         {            
             try
             {

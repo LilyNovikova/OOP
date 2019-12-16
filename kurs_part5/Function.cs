@@ -10,6 +10,13 @@ namespace Functions
     {
         private Tree FunctionTree;
         private FunctionParser Parser;
+        public int NumberOfVariables
+        {
+            get
+            {
+                return Parser.x.Count;
+            }
+        }
         public Function(string expr)
         {
             Parser = new FunctionParser(expr);
@@ -18,7 +25,7 @@ namespace Functions
 
         public double GetValue(Matrix x)
         {
-            for (int i = 0; i < x.Height; i++)
+            for (int i = 0; i < Parser.x.Count; i++)
             {
                 Parser.x[i + 1] = x[i, 0];
             }

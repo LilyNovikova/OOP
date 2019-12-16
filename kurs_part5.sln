@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "kurs_part5\Functions.csproj", "{A87E3259-5233-4185-AEC6-37E9817177E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewtonMethod", "NewtonMethod\NewtonMethod.csproj", "{19421026-C6F9-4E00-BA21-42E441FF9B20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OptMethod", "NewtonMethod\OptMethod.csproj", "{19421026-C6F9-4E00-BA21-42E441FF9B20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A87E3259-5233-4185-AEC6-37E9817177E0}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Functions</RootNamespace>
     <AssemblyName>Functions</AssemblyName>
@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Function.cs" />
     <Compile Include="FunctionParser.cs" />
-    <Compile Include="Gradient.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -230,6 +230,14 @@ namespace Functions
                 Nn.Parent = N;
                 index++;
                 N.IsEnd = false;
+                try
+                {
+                    x.Add(n, 0);
+                }
+                catch(ArgumentException)
+                {
+
+                }
             }           
             else
             {
