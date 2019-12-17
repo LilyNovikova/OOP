@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.DataTable = new System.Windows.Forms.DataGridView();
-            this.DataFromTableBtn = new System.Windows.Forms.Button();
             this.DataFromFileBtn = new System.Windows.Forms.Button();
             this.SelectBtn = new System.Windows.Forms.Button();
             this.RowsUpDown = new System.Windows.Forms.NumericUpDown();
@@ -60,19 +59,9 @@
             this.DataTable.TabIndex = 0;
             this.DataTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataTable_CellContentClick);
             // 
-            // DataFromTableBtn
-            // 
-            this.DataFromTableBtn.Location = new System.Drawing.Point(258, 12);
-            this.DataFromTableBtn.Name = "DataFromTableBtn";
-            this.DataFromTableBtn.Size = new System.Drawing.Size(226, 23);
-            this.DataFromTableBtn.TabIndex = 1;
-            this.DataFromTableBtn.Text = "Data from table";
-            this.DataFromTableBtn.UseVisualStyleBackColor = true;
-            this.DataFromTableBtn.Click += new System.EventHandler(this.DataFromTableBtn_Click);
-            // 
             // DataFromFileBtn
             // 
-            this.DataFromFileBtn.Location = new System.Drawing.Point(258, 41);
+            this.DataFromFileBtn.Location = new System.Drawing.Point(258, 12);
             this.DataFromFileBtn.Name = "DataFromFileBtn";
             this.DataFromFileBtn.Size = new System.Drawing.Size(226, 23);
             this.DataFromFileBtn.TabIndex = 2;
@@ -146,7 +135,7 @@
             // 
             // ClearTableBtn
             // 
-            this.ClearTableBtn.Location = new System.Drawing.Point(258, 71);
+            this.ClearTableBtn.Location = new System.Drawing.Point(258, 41);
             this.ClearTableBtn.Name = "ClearTableBtn";
             this.ClearTableBtn.Size = new System.Drawing.Size(226, 23);
             this.ClearTableBtn.TabIndex = 9;
@@ -167,7 +156,6 @@
             this.Controls.Add(this.RowsUpDown);
             this.Controls.Add(this.SelectBtn);
             this.Controls.Add(this.DataFromFileBtn);
-            this.Controls.Add(this.DataFromTableBtn);
             this.Controls.Add(this.DataTable);
             this.Name = "Form1";
             this.Text = "Data selection";
@@ -183,7 +171,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView DataTable;
-        private System.Windows.Forms.Button DataFromTableBtn;
         private System.Windows.Forms.Button DataFromFileBtn;
         private System.Windows.Forms.Button SelectBtn;
         private System.Windows.Forms.NumericUpDown RowsUpDown;

@@ -13,8 +13,7 @@ namespace GUI
 {
     public partial class Form1 : Form
     {
-        private static string InputFileName = "net.txt";
-        private static string[] FileContent;
+        private static string InputFileName = "input.txt";
         private static Table Table;
 
         public Form1()
@@ -24,6 +23,7 @@ namespace GUI
 
         private void RowsUpDown_ValueChanged(object sender, EventArgs e)
         {
+
             if (RowsUpDown.Value >= 0)
             {
                 TableToSize((int)RowsUpDown.Value, (int)ColumnsUpDown.Value);
@@ -97,6 +97,7 @@ namespace GUI
             }
         }
 
+        //приводит таблицу к нужному размеру
         private void TableToSize(int Rows, int Columns)
         {
             //add rows when there is no columns
@@ -117,34 +118,17 @@ namespace GUI
                 ColumnsUpDown.Value = 0;
                 Columns = 0;
             }
+            //добавляем нужное количество колонок
             ColumnsToSize(Columns);
+            //добавляем нужное количество рядов
             RowsToSize(Rows);
 
+            //выставляем на счётчиках нужные значения
             ColumnsUpDown.Value = DataTable.ColumnCount;
             RowsUpDown.Value = DataTable.RowCount;
         }
 
-        private void SetTableValues(Table T)
-        {
-            int i = 0;
-            foreach (Set S in T)
-            {
-                int j = 0;
-                foreach (int param in S)
-                {
-                    try
-                    {
-                        DataTable[j, i].Value = param.ToString();
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionLabel.Text = e.GetType().ToString() + " " + e.Message;
-                    }
-                }
-
-            }
-        }
-
+        //записываем в таблицу формы значения из таблицы наборов
         private void SetTable(Table T)
         {
             try
@@ -172,12 +156,13 @@ namespace GUI
             }
         }
 
+        //взять таблицу из файла
         private void DataFromFileBtn_Click(object sender, EventArgs e)
         {
             try
             {
                 string[] names = { "1", "2", "3", "4", "5", "6", "7", "8" };
-                int[][] data = Utils.ToIntArray(FileUtils.ReadText("input.txt"), " ,\n");
+                int[][] data = Utils.ToIntArray(FileUtils.ReadText(InputFileName), " ,\n");
                 Table = new Table(names, data);
                 //output table
                 SetTable(Table);
@@ -188,58 +173,66 @@ namespace GUI
             }
         }
 
+     
+        //извлечение содержимого таблицы формы в строку 
         private string GetTableContent()
         {
             string content = "";
-            try
+            int Rows = DataTable.RowCount;
+            foreach (DataGridViewRow Row in DataTable.Rows)
             {
-                int Rows = DataTable.RowCount;
-                foreach (DataGridViewRow Row in DataTable.Rows)
+                foreach (DataGridViewCell Cell in Row.Cells)
                 {
-                    foreach (DataGridViewCell Cell in Row.Cells)
+                    int value;
+                    if (int.TryParse(Cell.Value.ToString(), out value))
+                        content += Cell.Value.ToString() + ',';
+                    else
                     {
-                        int value;
-                        if (int.TryParse(Cell.Value.ToString(), out value))
-                            content += Cell.Value.ToString() + ',';
+                        throw new ArgumentException("Unallowed symbols in table");
                     }
-                    content = content.TrimEnd(',');
-                    content += '\n';
                 }
-                content = content.TrimEnd('\n');
+                content = content.TrimEnd(',');
+                content += '\n';
             }
-            catch (Exception ex)
-            {
-                ExceptionLabel.Text = ex.GetType().ToString() + " " + ex.Message;
-            }
+            content = content.TrimEnd('\n');
             return content;
         }
-        private void DataFromTableBtn_Click(object sender, EventArgs e)
+        //создаём таблицу наборов по значениями в таблице формы
+        private void DataFromTable()
         {
-            try
+            string[] names = new string[DataTable.RowCount];
+            for (int i = 0; i < names.Length; i++)
             {
-                string[] names = new string[DataTable.RowCount];
-                for (int i = 0; i < names.Length; i++)
-                {
-                    names[i] = i.ToString();
-                }
-                string content = GetTableContent();
-                Table = new Table(names, Utils.ToIntArray(content.Split('\n'), " ,\n"));
+                names[i] = i.ToString();
             }
-            catch (Exception ex)
-            {
-                ExceptionLabel.Text = ex.GetType().ToString() + " " + ex.Message;
-            }
+            //получаем содержимое таблицы формы
+            string content = GetTableContent();
+
+            Table = new Table(names, Utils.ToIntArray(content.Split('\n'), " ,\n"));
+
         }
 
         private void SelectBtn_Click(object sender, EventArgs e)
         {
             if (Table != null)
             {
-                Table.Optimize();
-                SetTable(Table);
+                try
+                {
+                    //получение таблицы
+                    DataFromTable();
+                    //селекция
+                    Table.Optimize();
+                    //вывод результата селекции
+                    SetTable(Table);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionLabel.Text = ex.GetType().ToString() + " " + ex.Message;
+                }
             }
         }
 
+        //очистка содержимого таблицы
         private void ClearTableBtn_Click(object sender, EventArgs e)
         {
             try

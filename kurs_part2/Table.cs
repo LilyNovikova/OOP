@@ -15,10 +15,13 @@ namespace kurs_part2
         public Table(string[] names, int[][] data)
         {
             Set[] SetArray = new Set[data.Length];
+
+            //инициализируем все наборы
             for (int i = 0; i < data.Length; i++)
             {
                 SetArray[i] = new Set(names[i], data[i]);
             }
+            //конверитруем в список и добавляем наборы в таблицу
             sets = SetArray.ToList<Set>();
 
             RowsCount = data.Length;
@@ -33,12 +36,14 @@ namespace kurs_part2
 
         public void Optimize()
         {
+            //сравнение  каждого из наборов с каждым
             for (int i = 0; i < sets.Count; i++)
             {
                 Set current1 = sets.ElementAt(i);
                 for (int j = i+1; j < sets.Count; j++)
                 {
                     Set current2 = sets.ElementAt(j);
+                    //если 2 больше 1, удаляем 1
                     if (current1.Less(current2))
                     {
                         sets.Remove(current1);
@@ -46,7 +51,7 @@ namespace kurs_part2
                         RowsCount--;
                         break;
                     }
-                    else
+                    else //если 1 больше 2, удаляем 2
                         if (current2.Less(current1))
                     {
                         sets.Remove(current2);

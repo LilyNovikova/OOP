@@ -38,17 +38,22 @@ namespace kurs_part2
                 throw new ArgumentException("Number of parameters is different");
             }
             int NumberOfEquals = 0;
+            //поэлементное сравнение наборов
             for (int i = 0; i < parameters.Length; i++)
             {
+                //если хоть один из параметров больше, данный набор не меньше
+                //или наборы несравнимы
                 if(parameters[i] > ParametersToCompare[i])
                 {
                     return false;
                 }
+                //если встретились равные параметры
                 if(parameters[i] == ParametersToCompare[i])
                 {
                     NumberOfEquals++;
                 }
             }
+            //если нет больших параметров и не все равные, значит, данный набор меньше
             return NumberOfEquals < parameters.Length;            
         }
 
