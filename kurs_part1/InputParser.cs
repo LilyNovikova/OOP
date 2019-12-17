@@ -29,6 +29,7 @@ namespace kurs_part1
             {
                 switch (XNode.Name)
                 {
+                    //добавляем транспортные средства в списки в соотв. с типом
                     case "Car":
                         foreach (XmlNode XChildNode in XNode.ChildNodes)
                         {

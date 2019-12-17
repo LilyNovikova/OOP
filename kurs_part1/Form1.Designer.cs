@@ -8,7 +8,7 @@ namespace kurs_part1
 {
     partial class Form1
     {
-        
+
         /// <summary>
         /// Обязательная переменная конструктора.
         /// </summary>
@@ -59,16 +59,10 @@ namespace kurs_part1
             this.TransportTypeSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TransportTypeSelection.FormattingEnabled = true;
-            this.TransportTypeSelection.Items.AddRange(new object[] {
-            "Car",
-            "Boat",
-            "Aircraft",
-            "Train"});
             this.TransportTypeSelection.Location = new System.Drawing.Point(12, 12);
             this.TransportTypeSelection.Name = "TransportTypeSelection";
             this.TransportTypeSelection.Size = new System.Drawing.Size(270, 24);
             this.TransportTypeSelection.TabIndex = 0;
-            this.TransportTypeSelection.Text = "Car";
             this.TransportTypeSelection.SelectedIndexChanged += new System.EventHandler(this.TransportType_SelectedIndexChanged);
             // 
             // NameLabel
@@ -184,7 +178,6 @@ namespace kurs_part1
             this.LSpeed.Size = new System.Drawing.Size(13, 17);
             this.LSpeed.TabIndex = 12;
             this.LSpeed.Text = "-";
-            this.LSpeed.Click += new System.EventHandler(this.label2_Click);
             // 
             // LWeight
             // 
@@ -261,6 +254,7 @@ namespace kurs_part1
             this.Controls.Add(this.TransportTypeSelection);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -286,92 +280,7 @@ namespace kurs_part1
         private System.Windows.Forms.Label LPrice;
         private System.Windows.Forms.Label LAddProperty;
 
-        private static Transport SelectedItem;
-        private static IEnumerable SelectedList;
-        public void TransportType_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            SetTransportCollection(out SelectedList);
-        }
 
-        public void SetLabels(Transport T)
-        {
-            NameLabel.Text = T.Name;
-            LModel.Text = T.Model;
-            LSpeed.Text = T.Speed.ToString();
-            LWeight.Text = T.Weight.ToString();
-            LSeats.Text = T.Seats.ToString();
-            LPrice.Text = T.Price.ToString();
-            LCapacity.Text = T.Capacity.ToString();
-            LAddProperty.Text = T.GetAddPropertyString();
-        }
-
-        public void TransportSelection_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            
-            try
-            {
-                string selection = TransportSelection.SelectedItem.ToString();
-                try
-                {
-                    foreach (Transport T in SelectedList)
-                    {
-                        if (T.Name.Equals(selection))
-                        {
-                            SelectedItem = T;
-                            SetLabels(T);
-                            break;
-                        }
-                    }
-                } 
-                catch(NullReferenceException)
-                {
-                    
-                }           
-            }
-            catch (InvalidOperationException)
-            {
-
-            }
-        }
-
-        public void SetTransportCollection(out IEnumerable SelectedList)
-        {
-            this.TransportSelection.Items.Clear();
-            this.TransportSelection.Items.Add("None");
-            this.TransportSelection.SelectedItem = "None";
-            switch (TransportTypeSelection.SelectedItem.ToString())
-            {
-                default:
-                    SelectedList = InputParser.Cars;
-                    foreach (Car Item in InputParser.Cars)
-                    {
-                        this.TransportSelection.Items.Add(Item.ToString());
-                    }
-                    break;
-                case "Boat":
-                    SelectedList = InputParser.Boats;
-                    foreach (Boat Item in InputParser.Boats)
-                    {
-                        this.TransportSelection.Items.Add(Item.ToString());
-                    }
-                    break;
-                case "Aircraft":
-                    SelectedList = InputParser.Aircrafts;
-                    foreach (Aircraft Item in InputParser.Aircrafts)
-                    {
-                        this.TransportSelection.Items.Add(Item.ToString());
-                    }
-                    break;
-                case "Train":
-                    SelectedList = InputParser.Trains;
-                    foreach (Train Item in InputParser.Trains)
-                    {
-                        this.TransportSelection.Items.Add(Item.ToString());
-                    }
-                    break;
-
-            }
-        }
     }
 }
 

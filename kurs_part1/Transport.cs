@@ -2,13 +2,21 @@
 
 public class Transport
 {
+    //число свойств
     protected const int NumberOfProperties = 7;
+    //название
     public string Name { get; protected set; }
+    //модель
     public string Model { get; protected set; }
+    //скорость
     public double Speed { get; protected set; }
+    //вес
     public double Weight { get; protected set; }
+    //число мест
     public int Seats { get; protected set; }
+    //мощность
     public double Capacity { get; protected set; }
+    //цена
     public double Price { get; protected set; }
 
     public Transport(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price)
@@ -49,6 +57,7 @@ public class Transport
 public class Car : Transport 
 {
     private const int NumberOfAdditionalProperties = 1;
+    //число колёс
     private int Wheels;
     public Car(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _wheels)
         : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
@@ -74,6 +83,7 @@ public class Car : Transport
 public class Boat : Transport
 {
     private const int NumberOfAdditionalProperties = 1;
+    //водоизмещение
     private int Displacement;
     public Boat(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _displacement)
          : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
@@ -100,6 +110,7 @@ public class Boat : Transport
 public class Aircraft : Transport
 {
     private const int NumberOfAdditionalProperties = 1;
+    //максимальная высота полёта
     private int MaxHeight;
     public Aircraft(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _maxheight)
          : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
@@ -125,6 +136,7 @@ public class Aircraft : Transport
 public class Train : Transport
 {
     private const int NumberOfAdditionalProperties = 1;
+    //число вагонов
     private int Wagons;
     public Train(string _name, string _model, double _speed, double _weight, int _seat, double _capacity, double _price, int _wagons)
          : base(_name, _model, _speed, _weight, _seat, _capacity, _price)
