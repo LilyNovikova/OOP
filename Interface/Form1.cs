@@ -210,10 +210,14 @@ namespace Interface
                                 Table[j, i].Value = string.Format("{0}/{1}", 0, Bandwidth);
                             }
                         }
+                        else
+                        {
+                            throw new FormatException("Unallowed symbols in table");
+                        }
                     }
-                    catch (Exception ex)
+                    catch (NullReferenceException)
                     {
-                        //ExceptionLabel.Text = ex.GetType().ToString() + " " + ex.Message;
+
                     }
                 }
             }
