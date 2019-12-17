@@ -41,6 +41,7 @@ namespace Functions
             this.width = width;
             M = new double[this.height, this.width];
         }
+        //создание вектора(матрицы из 1 столбца)
         public Matrix(List<Double> point)
         {
             this.height = point.Count;
@@ -49,6 +50,7 @@ namespace Functions
             for (int i = 0; i < point.Count; i++)
                 M[i, 0] = point[i];
         }
+        //получение элемента матрицы (строка i, столбец j)
         public double this[int i, int j]
         {
             get
@@ -60,6 +62,7 @@ namespace Functions
                 M[i, j] = value;
             }
         }
+        //копирование матрицы
         public Matrix Copy()
         {
             Matrix NewMatrix = new Matrix(this.height, this.width);

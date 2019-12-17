@@ -61,10 +61,12 @@ namespace Functions
             Expression = expr;
             ReadExpr();
         }
+        //считывание выражения
         private void ReadExpr()
         {
-            while (index < Expression.Length) // читает всю строку
+            while (index < Expression.Length)
             {
+                //считываем следующий символ
                 NextRead(Expression);
             }
         }
@@ -234,17 +236,17 @@ namespace Functions
                 {
                     x.Add(n, 0);
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
 
                 }
-            }           
+            }
             else
             {
                 string StrNum = "";
                 while ((Expression[index] >= '0' && Expression[index] <= '9') || Expression[index] == ',' || Expression[index] == '.')
                 {
-                    if(Expression[index] == '.')
+                    if (Expression[index] == '.')
                     {
                         StrNum += ',';
                     }
@@ -379,18 +381,19 @@ namespace Functions
             }
             else
             // если число или переменная
-            if ((Expression[index] >= '0' && Expression[index] <= '9') || Expression[index] == ',' || Expression[index] == 'x' )
+            if ((Expression[index] >= '0' && Expression[index] <= '9') || Expression[index] == ',' || Expression[index] == 'x')
             {
                 NumberOrVariable();
             }
             else
-            if(Expression[index] == 'e' || Expression[index] == 'p')
+            if (Expression[index] == 'e' || Expression[index] == 'p')
             {
-                if(Expression[index] == 'e' && Expression[index+1] == 'x')
+                //экспонента
+                if (Expression[index] == 'e' && Expression[index + 1] == 'x')
                 {
                     SpecialFunction();
                 }
-                else
+                else //число е
                 {
                     Constant();
                 }
@@ -413,9 +416,9 @@ namespace Functions
             {
                 Pow();
             }
-            else 
+            else
             // пробел
-            if(Expression[index] == ' ')
+            if (Expression[index] == ' ')
             {
                 index++;
             }

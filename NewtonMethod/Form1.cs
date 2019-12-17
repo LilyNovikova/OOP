@@ -34,6 +34,7 @@ namespace OptMethod
 
         }
 
+        //парсинг введённой функции
         private void ParseFuncBtn_Click(object sender, EventArgs e)
         {
             try
@@ -69,6 +70,7 @@ namespace OptMethod
             TolBox.Enabled = false;
         }
 
+        //поиск минимума
         private void FindMinBtn_Click(object sender, EventArgs e)
         {
             try

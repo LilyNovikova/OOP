@@ -8,9 +8,9 @@ namespace Functions
 {
     public class Tree
     {
-        public Node Root { get; set; }
-        public Node Current { get; set; }
-
+        public Node Root { get; set; }//корень
+        public Node Current { get; set; }//текущий узел
+        //вывод дерева
         public void Show()
         {
             Root.Show(0);

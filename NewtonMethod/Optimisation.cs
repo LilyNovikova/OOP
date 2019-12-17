@@ -9,30 +9,19 @@ namespace OptMethod
 {
     public class Optimisation
     {
-        public static double Tolerance { get; set; } = 0.1;
+        public static double Tolerance { get; set; } = 0.1;//точность вычисления
 
-        /*public static void Main()
-        {
-            Function F = new Function("x1^2 + (x2-3)^2");
-            List<double> CenterP = new List<double>();
-            CenterP.Add(-0.5);
-            CenterP.Add(2.5);
-            List<double> WidthList = new List<double>();
-            WidthList.Add(5);
-            WidthList.Add(3);
-            Matrix CenterPoint = new Matrix(CenterP);
-            Matrix Width = new Matrix(WidthList);
-            Matrix Min;
-            int feval = 0;
-            Console.WriteLine(Math.Round( Optimisation.FindMinimum(F, CenterPoint, Width, out feval, out Min), 2) + "\nmin: " +Min + "\nfeval:" + feval);
-        }*/
+        //поиск минимума методо перебора
         public static double FindMinimum(Function F, Matrix StartPoint, Matrix Width, out int feval, out Matrix MinPoint)
         {
             feval = 0;
+            //получение списка пар (точка, значение)
             List<KeyValuePair<Matrix, double>> values = GetValues(F, StartPoint, Width, out feval);
+
             KeyValuePair<Matrix, double> MinPair = values.OrderBy(Pair => Math.Round(Pair.Value, 3)).First();
             MinPoint = MinPair.Key;
             List<double> MinList = new List<double>();
+            //отсеивание лишних координат 
             for(int i = 0;i < F.NumberOfVariables;i++)
             {
                 MinList.Add(Math.Round( MinPoint[i, 0], 3));
@@ -41,17 +30,18 @@ namespace OptMethod
             return MinPair.Value;
         }
 
-        private static List<KeyValuePair<Matrix, double>> GetValues(Function F, Matrix CenterPoint, Matrix Width, out int feval)
+        //вычисление значений функции в точках области
+        private static List<KeyValuePair<Matrix, double>> GetValues(Function F, Matrix StartPoint, Matrix Width, out int feval)
         {
             List<KeyValuePair<Matrix, double>> values = new List<KeyValuePair<Matrix, double>>();
-            if (CenterPoint.Height != Width.Height)
+            if (StartPoint.Height != Width.Height)
             {
                 throw new ArgumentException();
             }
             feval = 0;
-            Matrix StartPoint = CenterPoint.Copy();
             Matrix Point = StartPoint.Copy();
             double Step = Tolerance;
+            //вычисление значений в точках
             for (double i = 0; i < Width[0, 0]; i += Step)
             {
                 Point[1, 0] = StartPoint[1, 0];

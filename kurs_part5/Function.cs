@@ -10,7 +10,7 @@ namespace Functions
     {
         private Tree FunctionTree;
         private FunctionParser Parser;
-        public int NumberOfVariables
+        public int NumberOfVariables //число переменных
         {
             get
             {
@@ -23,6 +23,7 @@ namespace Functions
             FunctionTree = Parser.FunctionTree;
         }
 
+        //вычисление значения функции в точке
         public double GetValue(Matrix x)
         {
             for (int i = 0; i < Parser.x.Count; i++)
