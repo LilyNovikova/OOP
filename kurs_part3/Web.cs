@@ -36,6 +36,7 @@ namespace kurs_part3
         public int NumberEdges { get; private set; }
         public int NumberNodes { get; private set; }
 
+        //возвращает массив вссех вершин графа
         public Node[] GetAllNodes()
         {
             if (Source.Exist())
@@ -74,7 +75,7 @@ namespace kurs_part3
             NumberEdges = 0;
             NumberNodes = 0;
         }
-
+        //добавление вершины
         public void AddEdge(string NewBegin, string NewEnd, int NewBandwidth)
         {
             if ((NewBegin != NewEnd) && NewBandwidth > 0)
@@ -152,7 +153,7 @@ namespace kurs_part3
                 else throw new ArgumentException("Trying to add edge with bandwidth less 1");
             }
         }
-
+        //нахождение добавочного потока на пути
         private int FindMinAdditionalFlow(Edge[] path)
         {
             int MinAddFlow = path[0].Bandwidth - path[0].Flow;
@@ -162,6 +163,7 @@ namespace kurs_part3
                 if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
                     ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
                 {
+                    //если мы идём по направлению ребра
                     if (path[i].Bandwidth - path[i].Flow < MinAddFlow)
                     {
                         MinAddFlow = path[i].Bandwidth - path[i].Flow;
@@ -170,6 +172,7 @@ namespace kurs_part3
                 }
                 else
                 {
+                    //если идём против направления ребра
                     PrevDirection = false;
                     if (path[i].Flow < MinAddFlow)
                     {
@@ -179,28 +182,33 @@ namespace kurs_part3
             }
             return MinAddFlow;
         }
-
+        //увеличение потока на величину на пути
         private Edge[] AddFlow(Edge[] path, int AdditionalFlow)
         {
             path[0].Flow = path[0].Flow + AdditionalFlow;
             bool PrevDirection = true;
             for (int i = 1; i < path.Length; i++)
             {
-                if ((path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
-                   ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection))
+
+                if (
+                    (path[i - 1].End.Name.Equals(path[i].Begin.Name) && PrevDirection) ||
+                   ((path[i - 1].Begin.Name).Equals(path[i].Begin.Name) && !PrevDirection)
+                   )
                 {
+                    //если мы идём по направлению ребра
                     PrevDirection = true;
                     path[i].Flow = path[i].Flow + AdditionalFlow;
                 }
                 else
                 {
+                    //если идём против направления ребра
                     PrevDirection = false;
                     path[i].Flow = path[i].Flow - AdditionalFlow;
                 }
             }
             return path;
         }
- 
+       
         public void FordFulkersonAlgorithm()
         {
             if (!SourceName.Equals(Source.Name)) throw new ArgumentNullException("No source in the web");
@@ -208,7 +216,8 @@ namespace kurs_part3
 
             Edge[] path = new Edge[0];
             bool IsWayFound = false;
-            path = Source.FindWay(Sink, ref path, out IsWayFound);//find a find_way way from source to sink
+            //find way from source to sink
+            path = Source.FindWay(Sink, ref path, out IsWayFound);
 
             if (path.Length < 1) throw new Exception("Can't find way from source to sink");
             while (IsWayFound)
@@ -220,10 +229,12 @@ namespace kurs_part3
                 path = AddFlow(path, AdditionalFlow);
 
                 path = new Edge[0];
-                path = Source.FindWay(Sink, ref path, out IsWayFound);   //find a find_way way from source to sink
+                //find way from source to sink
+                path = Source.FindWay(Sink, ref path, out IsWayFound);  
             }
         }
 
+        //вычисление потока в графе
         public int SummFlow()
         {
             if (SourceName.Equals(Source.Name))

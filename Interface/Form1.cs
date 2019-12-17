@@ -18,6 +18,7 @@ namespace Interface
         private static Web web;
         private static string[] FileContent;
         private static int Flow;
+
         public FordFulkerson()
         {
             InitializeComponent();
@@ -91,6 +92,21 @@ namespace Interface
             {
                 try
                 {
+                    Table[int.Parse(E.End.Name) - 1, int.Parse(E.Begin.Name) - 1].Value = string.Format("{0}", E.Bandwidth);
+                }
+                catch (Exception e)
+                {
+                    ExceptionLabel.Text = e.GetType().ToString() + " " + e.Message;
+                }
+            }
+        }
+
+        private void SetFlowValues(Web Web)
+        {
+            foreach (Edge E in Web.Edges)
+            {
+                try
+                {
                     Table[int.Parse(E.End.Name) - 1, int.Parse(E.Begin.Name) - 1].Value = string.Format("{0}/{1}", E.Flow, E.Bandwidth);
                 }
                 catch (Exception e)
@@ -128,27 +144,24 @@ namespace Interface
 
         private void CountMaxFlowBtn_Click(object sender, EventArgs e)
         {
-            if (web != null)
+            try
             {
-
-                try
+                GraphFromTable();
+                if (web.NumberEdges == 0)
                 {
-                    if (web.NumberEdges == 0)
-                    {
-                        ExceptionLabel.Text = "Please, enter graph parameters";
-                    }
-                    else
-                    {
-                        web.FordFulkersonAlgorithm();
-                        Flow = web.SummFlow();
-                        MaxFlowValueLabel.Text = Flow.ToString();
-                        SetTableValues(web);
-                    }
+                    ExceptionLabel.Text = "Please, enter graph parameters";
                 }
-                catch (Exception ex)
+                else
                 {
-                    ExceptionLabel.Text = ex.GetType().ToString() + " " + ex.Message;
+                    web.FordFulkersonAlgorithm();
+                    Flow = web.SummFlow();
+                    MaxFlowValueLabel.Text = Flow.ToString();
+                    SetFlowValues(web);
                 }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLabel.Text = ex.GetType().ToString() + " " + ex.Message;
             }
         }
 
@@ -170,8 +183,9 @@ namespace Interface
             }
         }
 
-        private void GraphFromTableBtn_Click(object sender, EventArgs e)
+        private void GraphFromTable()
         {
+            Flow = 0;
             web = new Web();
             web.SourceName = SourceUpDown.Value.ToString();
             web.SinkName = SinkUpDown.Value.ToString();

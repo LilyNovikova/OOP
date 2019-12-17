@@ -8,11 +8,13 @@ namespace kurs_part3
         private const char PathSeparator = '\\';
         private static string SolutionDir = FindSolutionDir();
 
+        //чтение содержимого файла
         public static string[] ReadText(string InputFileName)
         {
              return File.ReadAllLines(SolutionDir+ InputFileName);
         }
 
+        //поиск корневой директории проекта
         private static string FindSolutionDir()
         {
             string[] path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location).Split(PathSeparator);

@@ -41,7 +41,6 @@
             this.GraphFromFileBtn = new System.Windows.Forms.Button();
             this.CountMaxFlowBtn = new System.Windows.Forms.Button();
             this.ClearTableBtn = new System.Windows.Forms.Button();
-            this.GraphFromTableBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Table)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumNodesUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SinkUpDown)).BeginInit();
@@ -181,16 +180,6 @@
             this.ClearTableBtn.UseVisualStyleBackColor = true;
             this.ClearTableBtn.Click += new System.EventHandler(this.ClearTableBtn_Click);
             // 
-            // GraphFromTableBtn
-            // 
-            this.GraphFromTableBtn.Location = new System.Drawing.Point(877, 301);
-            this.GraphFromTableBtn.Name = "GraphFromTableBtn";
-            this.GraphFromTableBtn.Size = new System.Drawing.Size(128, 50);
-            this.GraphFromTableBtn.TabIndex = 13;
-            this.GraphFromTableBtn.Text = "Graph from table";
-            this.GraphFromTableBtn.UseVisualStyleBackColor = true;
-            this.GraphFromTableBtn.Click += new System.EventHandler(this.GraphFromTableBtn_Click);
-            // 
             // FordFulkerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -198,7 +187,6 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1092, 702);
-            this.Controls.Add(this.GraphFromTableBtn);
             this.Controls.Add(this.ClearTableBtn);
             this.Controls.Add(this.CountMaxFlowBtn);
             this.Controls.Add(this.GraphFromFileBtn);
@@ -239,7 +227,6 @@
         private System.Windows.Forms.Button GraphFromFileBtn;
         private System.Windows.Forms.Button CountMaxFlowBtn;
         private System.Windows.Forms.Button ClearTableBtn;
-        private System.Windows.Forms.Button GraphFromTableBtn;
     }
 }
 
