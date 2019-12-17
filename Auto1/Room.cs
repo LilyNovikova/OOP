@@ -8,6 +8,7 @@ namespace Auto1
 {
     public class Room
     {
+
         private static int ID = 0;
         public Request.TaskTypes Type;
         public int Id { get; private set; }
@@ -41,16 +42,23 @@ namespace Auto1
             ID++;
         }
 
+        //завершение заданий
         private void FinishTasks()
         {
+            //выбор завершённых заданий
             List<Task> TasksToFinish = (from T in CurrentTasks where T.IsFinished select T).ToList();
             foreach (Task Task in TasksToFinish)
             {
+                //возвращение рабочего в очередь на получение задания
                 WorkersQueue.Enqueue(Task.Finish());
+                //удаление из списка текущих заданий
                 CurrentTasks.Remove(Task);
+                //добавление в список завершённых
                 FinishedTasks.Add(Task);
                 TotalProfit += Task.Price;
                 Admin.Statistics.CurrentProfit += Task.Price;
+
+                //подсчёт завершённых заданий разных типов
                 switch (Task.Type)
                 {
                     case Request.TaskTypes.BodyRepair:
@@ -69,6 +77,7 @@ namespace Auto1
             }
         }
 
+        //старт новых заданий
         private void StartTasks()
         {
             if (TasksQueue.Count > 0)
@@ -85,7 +94,6 @@ namespace Auto1
                         }
                         catch (InvalidOperationException)
                         {
-                            //Console.WriteLine("[{0}]R{1} IOE No available tasks", Admin.Now, Id);
                         }
                         //start task if it is found
                         if (Task != null)
@@ -111,6 +119,7 @@ namespace Auto1
             }
         }
 
+        //моделирование новой минуты
         public void Next()
         {
             //check current tasks if some are finished
@@ -145,11 +154,13 @@ namespace Auto1
             }
         }
 
+        //добавление задания в очередь на выполнение
         public void AddTask(Task Task)
         {
             TasksQueue.Add(Task);
         }
 
+        //инициализация рабочих
         private void InitWorkers()
         {
             for (int i = 0; i < NumberOfWorkers; i++)
@@ -174,22 +185,7 @@ namespace Auto1
             return this.Id == Room.Id;
         }
 
-        public void GetStat()
-        {
-            Console.WriteLine("R'{0}' TQ: {1} (RQ: {2}) WQ: {3} Done: {4} Stopped: {5} Total: {6}",
-                Type, TasksQueue.Count, GetRequestsQueue().Count, WorkersQueue.Count, FinishedTasks.Count, NumberOfStoppedTasks,
-                TasksQueue.Count + CurrentTasks.Count + FinishedTasks.Count + NumberOfStoppedTasks);
-            Console.WriteLine("R'{0}' AQ: {1} (RQ: {2}) AW: {3} LP: {4} TP: {5}",
-                Type, Utils.StringToLength(AverageQueueLength.ToString(), 4), Utils.StringToLength(AverageRequestQueueLength.ToString(), 4),
-                Utils.StringToLength(AverageWorkingTimePercent.ToString(), 4), Utils.StringToLength(LostProfit.ToString(), 8),
-                Utils.StringToLength(TotalProfit.ToString(), 8));
-            foreach (Worker Worker in Workers)
-            {
-                //Worker.GetStat();
-                Worker.GetProfitStat();
-            }
-        }
-
+        //удаление просроченных заданий
         public void RemoveRequest(Request Request)
         {
             //from queue
@@ -223,27 +219,32 @@ namespace Auto1
                 // Console.WriteLine("[{0}] Rq{1} is overdue (R{2} CT{3})", Admin.Now, Task.AttachedRequest.Id, Id, Task.Id);
             }
         }
-
+        
+        //возвращает очередь заявок
         public List<Request> GetRequestsQueue()
         {
             return (from T in TasksQueue select T.AttachedRequest).ToList().Distinct().ToList();
         }
 
+        //возвращает очередь выполняющихся заявок
         public List<Request> GetProcessingRequests()
         {
             return (from T in CurrentTasks select T.AttachedRequest).ToList().Distinct().ToList();
         }
-
+       
+        //возвращает очередь заданий
         public List<Task> GetTasksQueue()
         {
             return TasksQueue;
         }
 
+        //обнуление статических переменных
         public static void Reset()
         {
             ID = 0;
         }
 
+        //приостанавливает работу цеха
         public void Pause(int PauseDuration)
         {
             foreach (Worker Worker in Workers)
@@ -260,6 +261,7 @@ namespace Auto1
             }
         }
 
+        //запускает работу цеха
         public void Start()
         {
             foreach (Worker Worker in Workers)

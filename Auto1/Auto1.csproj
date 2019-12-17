@@ -56,7 +56,6 @@
     <Compile Include="Tasks\EngineRepair.cs" />
     <Compile Include="Tasks\Inspection.cs" />
     <Compile Include="Tasks\TireFitting.cs" />
-    <Compile Include="Test.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Worker.cs" />
   </ItemGroup>

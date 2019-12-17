@@ -44,24 +44,13 @@ namespace Auto1
             ID++;
         }
 
-        public Task(int Duration, int Price)
-        {
-            InitTime = Admin.Now;
-            Id = ID;
-            ID++;
-            this.Duration = Duration + Utils.GetRandomDiff(Duration, Admin.MaxDisperciaPercent);
-            this.Price = Price;
-        }
-
-        public static Task GetRandom()
-        {
-            return new Task(Utils.GetRandomInt(1, Admin.MaxTaskDuration), Utils.GetRandomInt(1, Admin.MaxTaskPrice));
-        }
-
+        //старт выполнения задания
         public Task Start(Worker Executor)
         {
             this.Executor = Executor;
             this.ProcessingRoom = Executor.WorkingRoom;
+            //если уже выполняется другое задание из связанной заявки, но в другом цехе
+            //выбрасывает ошибку
             if (AttachedRequest.IsProcessing && !ProcessingRoom.Equals(AttachedRequest.ProcessingRoom))
             {
                 this.Executor = null;
@@ -76,16 +65,17 @@ namespace Auto1
             {
                 AttachedRequest.Start(this);
             }
-            // Console.WriteLine("[{0}] Task{1} is started", Admin.Now, Id);
             return this;
         }
 
+        //приостановка выполнения задания
         public void Pause(int PauseDuration)
         {
             if (PauseDuration < 0)
             {
                 throw new ArgumentException("PauseDuration must be >= 0");
             }
+            //если задание выполняется, приостанавливаем
             if (IsStarted && !IsFinished)
             {
                 FinishTime += PauseDuration;
@@ -96,8 +86,10 @@ namespace Auto1
             }
         }
 
+        //завершение выполнения задания
         public Worker Finish()
         {
+            //попытка раннего завершения
             if (Admin.Now < FinishTime)
             {
                 throw new InvalidOperationException("Task is not finished");
@@ -116,6 +108,7 @@ namespace Auto1
                 Id, InitTime, StartTime, FinishTime, AttachedRequest != null ? AttachedRequest.Id : -1);
         }
 
+        //привязка задания к заявке
         public void ConnectWithRequest(Request Request)
         {
             if (Request == null)
@@ -125,6 +118,7 @@ namespace Auto1
             this.AttachedRequest = Request;
         }
 
+        //обнуление статических переменных
         public static void Reset()
         {
             ID = 0;

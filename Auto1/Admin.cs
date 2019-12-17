@@ -28,7 +28,7 @@ namespace Auto1
         public List<Request> RequestsList = new List<Request>();
         public int[] NumberOfWorkersPerRoom = { 6, 1, 1, 1 };
         public bool IsPaused = true;
-        public int NextRequestReceivingTime;
+        public int NextRequestReceivingTime; //время появление следующей заявки
 
         public Admin(int ImitStep, int InspectionRoomWorkersNum, int EngineRepairRoomWorkersNum,
             int TireFittingRoomWorkersNum, int BodyRepairRoomWorkersNum)
@@ -53,6 +53,7 @@ namespace Auto1
             InitRooms(NumberOfWorkersPerRoom);
         }
 
+        //обнуление статических переменных
         private static void Reset()
         {
             Utils.Reset();
@@ -63,30 +64,24 @@ namespace Auto1
             Now = ImitationStart;
         }
 
-        public void Work()
-        {
-            while (Now <= ImitationDuration)
-            {
-                GoToNextImitStep();
-                GetStat();
-            }
-            GetStat();
-        }
-
+        //моделирования нового шага
         public void GoToNextImitStep()
         {
             do
             {
+                //если закрыто, но пришло время открываться
                 if (Schedule.IsOpened && IsPaused)
                 {
                     Start();
                 }
+                //если открыто, но пора закрываться
                 else if (!Schedule.IsOpened && !IsPaused)
                 {
                     int PauseDuration = Schedule.GetTimeInMinutes(Schedule.GetDayNumber() + 1, Schedule.StartHour, 0) - Admin.Now;
                     NextRequestReceivingTime += PauseDuration;
                     Pause(PauseDuration);
                 }
+                //если рабочее время
                 if (!IsPaused)
                 {
                     if (Now == NextRequestReceivingTime)
@@ -98,11 +93,10 @@ namespace Auto1
                         RequestReceived(this, Request);
                     }
                 }
-                //current stat
-
 
                 RemoveOverdueRequests();
                 Next();
+                //если полночь - подсчёт статистики
                 if (Now % (Schedule.MinutesPerHour * Schedule.HoursPerDay) == 0)
                 {
                     SetCurrentStat();
@@ -114,16 +108,7 @@ namespace Auto1
             while (Now <= ImitationDuration && (Now - ImitationStart) % ImitationStep != 0);
         }
 
-        public Request ReceiveRequest()
-        {
-            Request Request = new Request();
-            Request.AddTask(new Task(15, 20));
-            Request.AddTask(new Task(12, 10));
-            Request.AddTask(new Task(10, 15));
-            Request.AddTask(new Task(7, 15));
-            return Request;
-        }
-
+        //сортировка заданий по цехам
         private void SortTasks(Request Request)
         {
             foreach (var Task in Request.TasksToDoList)
@@ -139,6 +124,7 @@ namespace Auto1
             }
         }
 
+        //моделирование новой минуты
         private void Next()
         {
             foreach (Room Room in RoomsList)
@@ -147,23 +133,7 @@ namespace Auto1
             }
         }
 
-        public void GetStat()
-        {
-
-
-            Console.WriteLine("\n-------------\nSTAT {0} ({1})", Now, !IsPaused ? "Opened" : "Closed");
-            Console.WriteLine(Schedule.GetTimeString());
-            foreach (Request Request in RequestsList)
-            {
-                //Request.GetStat();
-            }
-            Console.WriteLine("");
-            foreach (Room Room in RoomsList)
-            {
-                Room.GetStat();
-            }
-        }
-
+        //инициализация цехов
         private void InitRooms(int[] NumOfWorkers)
         {
             for (int i = 0; i < NumOfWorkers.Length; i++)
@@ -172,9 +142,12 @@ namespace Auto1
             }
         }
 
+        //удаление просроченных заявок
         private void RemoveOverdueRequests()
         {
+            //выбор заявок
             List<Request> ToRemove = (from R in RequestsList where (R.WaitingTime > MaxWaitingTime && !R.IsReady) select R).ToList();
+            //удаление
             foreach (Room Room in RoomsList)
             {
                 foreach (Request Request in ToRemove)
@@ -186,6 +159,7 @@ namespace Auto1
             }
         }
 
+        //приостановка работы автосервиса
         private void Pause(int PauseDuration)
         {
             IsPaused = true;
@@ -195,6 +169,7 @@ namespace Auto1
             }
         }
 
+        //запуск работы
         private void Start()
         {
             IsPaused = false;
@@ -204,8 +179,10 @@ namespace Auto1
             }
         }
 
+        //обновление статистики
         private void SetCurrentStat()
         {
+            //обновление статистики цехов
             double AvgQueue = 0;
             double AvgWorkingPercent = 0;
             foreach (Room R in RoomsList)
@@ -216,6 +193,7 @@ namespace Auto1
             Statistics.CurrentQueue = AvgQueue / RoomsList.Count;
             Statistics.CurrentWorkingPercent = AvgWorkingPercent / RoomsList.Count;
 
+            //обновление статистики заявок
             double AvgWait = 0;
             int NumFinished = 0;
             foreach(Request R in RequestsList)

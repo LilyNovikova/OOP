@@ -27,5 +27,12 @@ namespace Auto1
             }
             return directory;
         }
+
+        public static void WriteText(string Text, string FileName)
+        {
+            StreamWriter SW = File.CreateText(SolutionDir + FileName);
+            SW.WriteLine(Text);
+            SW.Close();
+        }
     }
 }

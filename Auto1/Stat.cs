@@ -54,6 +54,7 @@ namespace Auto1
             this.WorkersAmount = WorkersAmount;
         }
 
+        //запись текущего процента занятости рабочих 
         public void SetCurrentWorkingPercent(Room ProcessingRoom)
         {
             switch (ProcessingRoom.Type)
@@ -73,6 +74,7 @@ namespace Auto1
             }
         }
 
+        //суммирование статистики за день
         public void SumStat()
         {
             Profit += CurrentProfit;
@@ -112,6 +114,27 @@ namespace Auto1
             CurrentQueue = 0;
             CurrentWaitingTime = 0;
             CurrentWorkingPercent = 0;
+        }
+
+        public override string ToString()
+        {
+            string StatStr = "";
+            StatStr += Utils.StringToLength("Profit: ", 27) + Utils.StringToLength(Profit.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("WagePerWorker:", 27) + Utils.StringToLength(WagePerWorker.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("LostProfit:", 27) + Utils.StringToLength(LostProfit.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("LostWagePerWorker: ", 27) + Utils.StringToLength(LostWagePerWorker.ToString(), 10)+ "\n\n";
+
+            StatStr += Utils.StringToLength("NumberOfFinishedRequests:", 27) + Utils.StringToLength(NumberOfFinishedRequests.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("FinishedInspectionTasks:", 27) + Utils.StringToLength(FinishedInspectionTasks.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("FinishedEngineRepairTasks:", 27) + Utils.StringToLength(FinishedEngineRepairTasks.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("FinishedTireFittingTasks:", 27) + Utils.StringToLength(FinishedTireFittingTasks.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("FinishedBodyRepairTasks:", 27) + Utils.StringToLength(FinishedBodyRepairTasks.ToString(), 10)+ "\n\n";
+
+            StatStr += Utils.StringToLength("AvgQueue:", 27) + Utils.StringToLength(AvgQueue.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("AvgWaitingTime: ", 27) + Utils.StringToLength(AvgWaitingTime.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("AvgWorkingPercent:", 27) + Utils.StringToLength(AvgWorkingPercent.ToString(), 10)+ "\n";
+            StatStr += Utils.StringToLength("AvgWagePerDay:", 27) + Utils.StringToLength(AvgWagePerDay.ToString(), 10);
+            return StatStr;
         }
     }
 }

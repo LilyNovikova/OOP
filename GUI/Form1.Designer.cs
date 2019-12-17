@@ -264,11 +264,11 @@
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(964, 21);
+            this.label11.Location = new System.Drawing.Point(949, 21);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(93, 17);
+            this.label11.Size = new System.Drawing.Size(106, 17);
             this.label11.TabIndex = 18;
-            this.label11.Text = "Imitation Step";
+            this.label11.Text = "Simulation Step";
             // 
             // ImitStepUpDown
             // 
@@ -309,7 +309,7 @@
             this.ImitBtn.Name = "ImitBtn";
             this.ImitBtn.Size = new System.Drawing.Size(161, 64);
             this.ImitBtn.TabIndex = 22;
-            this.ImitBtn.Text = "Imitation";
+            this.ImitBtn.Text = "Simulation";
             this.ImitBtn.UseVisualStyleBackColor = false;
             this.ImitBtn.Click += new System.EventHandler(this.ImitBtn_Click);
             // 
@@ -471,6 +471,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1100, 774);
             this.Controls.Add(this.NewRequestLabel);
             this.Controls.Add(this.OverdueLabel);

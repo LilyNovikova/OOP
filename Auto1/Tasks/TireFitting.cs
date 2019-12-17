@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Auto1.Tasks
 {
+    /* класс: задание "Шиномонтаж"
+     */
     public class TireFitting : Task
     {
         public const int NumberOfTypes = 4;

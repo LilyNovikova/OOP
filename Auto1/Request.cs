@@ -9,6 +9,7 @@ namespace Auto1
 {
     public class Request
     {
+
         private static int ID = 0;
         public int Id { get; private set; }
         public int InitTime { get; private set; }
@@ -21,8 +22,8 @@ namespace Auto1
                 return (FinishTime == -1 ? Admin.Now : FinishTime) - InitTime;
             }
         }
-        public int FutureAddPrice { get; private set; } = 0;
-        public int Price { get; private set; } = 0;
+        public int FutureAddPrice { get; private set; } = 0; //цена невыполненных заданий
+        public int Price { get; private set; } = 0; //цена выполненны заданий
         public List<Task> TasksToDoList;
         public List<Task> FinishedTasksList;
         public bool IsProcessing { get; private set; } = false;
@@ -53,6 +54,7 @@ namespace Auto1
             ID++;
         }
 
+        //генерация случайной заявки
         public static Request GetRandomRequest()
         {
             Request Request = new Request();
@@ -84,6 +86,7 @@ namespace Auto1
             return Id == Request.Id;
         }
 
+        //доабвление задания в заявку
         public void AddTask(Task Task)
         {
             Task.ConnectWithRequest(this);
@@ -92,8 +95,10 @@ namespace Auto1
             FutureAddPrice += Task.Price;
         }
 
+        //старт выполнения задания
         public void Start(Task Task)
         {
+            //если начато первое задание, старт выполнения заявки
             if (StartTime == -1)
             {
                 StartTime = Admin.Now;
@@ -102,10 +107,12 @@ namespace Auto1
             IsProcessing = true;
         }
 
+        //завершение выполнения задания
         public void Finish(Task Task)
         {
             TasksToDoList.Remove(Task);
             FinishedTasksList.Add(Task);
+            //если заявка не была завершена и завершаемое задание - последнее невыполненное, завершаем заявку
             if (FinishTime == -1 && TasksToDoList.Count == 0)
             {
                 FinishTime = Admin.Now;
@@ -116,23 +123,13 @@ namespace Auto1
             Price += Task.Price;
         }
 
-        public string ToString1()
-        {
-            return string.Format("{6}Rq{0} IP: {1} PR: {2} TDL: {3} FTL: {4} WT: {5}",
-                Id, IsProcessing ? 1 : 0, ProcessingRoom == null ? -1 : ProcessingRoom.Id,
-                TasksToDoList.Count, FinishedTasksList.Count, WaitingTime, IsReady ? "+" : "-");
-        }
-
         public override string ToString()
         {
             return string.Format("R#{0} [{1}/{2}] t = {3}",
                 Id, FinishedTasksList.Count, TasksToDoList.Count + FinishedTasksList.Count, WaitingTime);
         }
-        public void GetStat()
-        {
-            Console.WriteLine(this);
-        }
 
+        //обнуление статических переменных
         public static void Reset()
         {
             ID = 0;

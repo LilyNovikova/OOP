@@ -17,7 +17,7 @@ namespace Auto1
         public double EarnedToday { get; private set; } = 0;
         public int WorkingTime { get; private set; } = 0;
         public int PauseTime { get; private set; } = 0;
-        public bool IsBusy { get; private set; } = false;
+        public bool IsBusy { get; private set; } = false; //работает ли в данный момент
         public bool IsPaused { get; private set; } = false;
         private int PausedUntilTime = 0;
         public Task CurrentTask { get; private set; } = null;
@@ -30,37 +30,31 @@ namespace Auto1
             ID++;
         }
 
+        //начать выполнение задания
         public void StartTask(Task Task)
         {
             if (!this.IsBusy)
             {
-                //               Console.WriteLine("[{0}]R{3} Worker{1} starts Task{2}", Admin.Now, Id, Task.Id, WorkingRoom.Id);
                 this.IsBusy = true;
                 this.CurrentTask = Task;
                 Task.StartTime = Admin.Now;
             }
-            else
+            else //если рабочий уже занят другим заданием
             {
                 throw new InvalidOperationException(string.Format("[{0}]R{1} Worker{2}: BUSY", Admin.Now, WorkingRoom.Id, Id));
             }
         }
 
+        //завершить выполнение задания
         public Task FinishTask()
         {
-            try
-            {
-                //               Console.WriteLine("[{0}]R{3} Worker{1} finished Task{2}", Admin.Now, Id, CurrentTask.Id, WorkingRoom.Id);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("[{0}]R{1} Worker{2}: smth is NULL", Admin.Now, WorkingRoom.Id, Id);
-            }
             try
             {
                 Task FinishedTask = CurrentTask;
                 FinishedTask.FinishTime = Admin.Now;
                 this.CurrentTask = null;
                 this.IsBusy = false;
+
                 this.EarnedToday += (double)FinishedTask.Price * WagePercent / 100;
                 this.WorkingTime += FinishedTask.Duration;
                 return FinishedTask;
@@ -72,6 +66,7 @@ namespace Auto1
             }
         }
 
+        //прерывание просроченного задания
         public void StopCurrentTask()
         {
             try
@@ -98,33 +93,20 @@ namespace Auto1
             }
         }
 
-        public void GetStat()
-        {
-            Console.WriteLine("W{0}R{1} WT: {2} FT: {3} EM: {4}", Id, WorkingRoom.Id, WorkingTime, Admin.Now - WorkingTime - PauseTime, EarnedMoney);
-        }
-
-        public void GetProfitStat()
-        {
-            Console.WriteLine("W{0}R{1} WT: {2} FT: {3} AEM: {4}",
-                Id, WorkingRoom.Id, WorkingTime, Admin.Now - WorkingTime, Utils.StringToLength(GetAverageProfit().ToString(), 7));
-        }
-
-        public double GetAverageProfit()
-        {
-            return (Schedule.GetDayNumber() > 0) ? (double)EarnedMoney / Schedule.GetDayNumber() : (double)EarnedMoney;
-        }
-
+        //обнуление статических переменных
         public static void Reset()
         {
             ID = 0;
         }
 
+        //приостановка работы
         public void Pause(int PauseDuration)
         {
             if (PauseDuration < 0)
             {
                 throw new ArgumentException("PauseDuration must be >= 0");
             }
+            //если рабочий выполняет задание, приостанавливаем его
             if (CurrentTask != null)
             {
                 try
@@ -143,8 +125,11 @@ namespace Auto1
             PausedUntilTime = Admin.Now + PauseDuration;
             IsPaused = true;
         }
+
+        //запуск работы
         public void Start()
         {
+            //если пауза закончилась, запускаем
             if (Admin.Now >= PausedUntilTime)
             {
                 IsPaused = false;
@@ -155,11 +140,12 @@ namespace Auto1
         public double GetDailyWage()
         {
             double Money = EarnedToday;
+            //если рабочий заработал больше минимума
             if (EarnedToday > MinimumDailyWage)
             {
                 EarnedMoney += EarnedToday;
             }
-            else
+            else//иначе выплачиваем минимум
             {
                 EarnedMoney += MinimumDailyWage;
             }

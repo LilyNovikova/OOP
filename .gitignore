@@ -12,6 +12,7 @@ log.txt
 SteamSetup*.exe
 *.crdownload
 *.tmp
+results.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

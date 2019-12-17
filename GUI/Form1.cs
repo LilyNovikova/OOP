@@ -15,12 +15,13 @@ namespace GUI
     {
         private const int TimerFrqcy = 1000;
         private Admin Admin = null;
-        private int ImitStep = 0;
-        private static int DefaultworkersNumber = 2;
-        private int InspectionWorkersNum = DefaultworkersNumber;
-        private int EngineRepairWorkersNum = DefaultworkersNumber;
-        private int TireFittingWorkersNum = DefaultworkersNumber;
-        private int BodyRepairWorkersNum = DefaultworkersNumber;
+        private int ImitStep = 120;
+        private int MaxImitStep = 10080;
+        private static int DefaultWorkersNumber = 2;
+        private int InspectionWorkersNum = DefaultWorkersNumber;
+        private int EngineRepairWorkersNum = DefaultWorkersNumber;
+        private int TireFittingWorkersNum = DefaultWorkersNumber;
+        private int BodyRepairWorkersNum = DefaultWorkersNumber;
         private bool IsPaused = true;
         private Timer Timer;
 
@@ -29,16 +30,17 @@ namespace GUI
             InitializeComponent();
         }
 
+        //проверка, не приостановлено ли моделирование
         private void Check(object sender, EventArgs e)
         {
             try
             {
-
+                //если да, останавливаем таймер
                 if (IsPaused)
                 {
                     Timer.Stop();
                 }
-                else
+                else //иначе моделируем следующий шаг
                 {
                     ImitNextStep();
                     Timer.Start();
@@ -49,6 +51,7 @@ namespace GUI
             }
         }
 
+        //выводим в форму очереди в цехах
         private void SetQueues()
         {
             foreach (Room R in Admin.RoomsList)
@@ -72,6 +75,7 @@ namespace GUI
             }
         }
 
+        //выводим текущие заявки 
         private void SetCurrentRequests()
         {
             foreach (Room R in Admin.RoomsList)
@@ -97,11 +101,14 @@ namespace GUI
 
         private void ImitBtn_Click(object sender, EventArgs e)
         {
+            //если моделирование остановлено - запускаем
+            //и наоборот
             IsPaused = !IsPaused;
             StatusLabel.Text = IsPaused ? "Pause" : "Play";
-            Check(sender, e);
+            Check(this, e);
         }
 
+        //вывод сообщения об удалении заявки
         private void ShowRemovedRequest(object obj, Request Request)
         {
             try
@@ -114,6 +121,7 @@ namespace GUI
             }
         }
 
+        //вывод сообщения о появлении заявки
         private void ShowReceivedRequest(object obj, Request Request)
         {
             try
@@ -126,10 +134,13 @@ namespace GUI
             }
         }
 
+        //моделирование следующего шага
         private void ImitNextStep()
         {
+            //если автосервис пока не инициализирован
             if (Admin == null)
             {
+                //считываем параметры сервиса
                 if (ImitStepUpDown.Value <= 0)
                 {
                     ExceptionLabel.Text = "Imitation step must be > 0";
@@ -160,6 +171,7 @@ namespace GUI
                 Admin.RequestReceived += ShowReceivedRequest;
             }
             Admin.GoToNextImitStep();
+            //выводим текущие проценты занятости рабочих
             BodyRepairPercentLabel.Text = string.Format("{0, 3} %", Admin.Statistics.BodyRepairCurrentWorkingTimePercent.ToString());
             EngineRepairPercentLabel.Text = string.Format("{0, 3} %", Admin.Statistics.EngineRepairCurrentWorkingTimePercent.ToString());
             TireFittingPercentLabel.Text = string.Format("{0, 3} %", Admin.Statistics.TireFittingCurrentWorkingTimePercent.ToString());
@@ -237,12 +249,15 @@ namespace GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ImitStepUpDown.Maximum = 10080;
-            ImitStepUpDown.Value = 120;
-            InspectionUpDown.Value = DefaultworkersNumber;
-            EngineRepairUpDown.Value = DefaultworkersNumber;
-            TireFittingUpDown.Value = DefaultworkersNumber;
-            BodyRepairUpDown.Value = DefaultworkersNumber;
+            //выставление значений по умолчанию
+            ImitStepUpDown.Maximum = MaxImitStep;
+            ImitStepUpDown.Value = ImitStep;
+            InspectionUpDown.Value = DefaultWorkersNumber;
+            EngineRepairUpDown.Value = DefaultWorkersNumber;
+            TireFittingUpDown.Value = DefaultWorkersNumber;
+            BodyRepairUpDown.Value = DefaultWorkersNumber;
+
+            //создание таймера обновления 
             Timer = new Timer();
             Timer.Interval = TimerFrqcy;
             Timer.Tick += new EventHandler(Check);

@@ -14,6 +14,7 @@ namespace GUI
     public partial class StatForm : Form
     {
         private Stat Statistics;
+        private string OutputFileName = "results.txt";
 
         public StatForm(Stat Stat)
         {
@@ -42,6 +43,18 @@ namespace GUI
                 AvgWagePerDayLabel.Text = Utils.StringToLength(Statistics.AvgWagePerDay.ToString(), 10);
 
 
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void ToFileBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FileUtils.WriteText(string.Format("[{0}]\n{1}", DateTime.Now, Statistics), OutputFileName);
             }
             catch (Exception ex)
             {

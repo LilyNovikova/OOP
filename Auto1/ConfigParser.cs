@@ -33,9 +33,10 @@ namespace Auto1
             {
                 Console.WriteLine(e.GetType() + "*** " + ConfigFileName);
             }
-            XmlElement XRoot = XConfig.DocumentElement;
+            XmlElement XRoot = XConfig.DocumentElement; //корень документа
             foreach (XmlNode XNode in XRoot)
             {
+                //сбор данных по узлам документа
                 switch (XNode.Name)
                 {
                     case "Admin":
