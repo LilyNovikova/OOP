@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Auto1;
+using System.IO;
 
 namespace GUI
 {
@@ -52,9 +53,26 @@ namespace GUI
 
         private void ToFileBtn_Click(object sender, EventArgs e)
         {
+            Stream DataStream;
             try
             {
-                FileUtils.WriteText(string.Format("[{0}]\n{1}", DateTime.Now, Statistics), OutputFileName);
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+                saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                saveFileDialog1.FilterIndex = 2;
+                saveFileDialog1.RestoreDirectory = true;
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    if ((DataStream = saveFileDialog1.OpenFile()) != null)
+                    {
+                        Encoding En = new UTF8Encoding();
+                        byte[] buff = En.GetBytes(string.Format("[{0}]\n{1}", DateTime.Now, Statistics).ToCharArray());
+                        DataStream.Write(buff, 0, buff.Length);
+                        DataStream.Close();
+                    }
+                }
+               
             }
             catch (Exception ex)
             {
