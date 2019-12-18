@@ -51,6 +51,8 @@ namespace NUnitTestProject1
             try
             {
                 Web web = new Web();
+                web.SourceName = "s";
+                web.SinkName = "t";
                 web.AddEdge("o", "p", 2);
                 web.AddEdge("o", "q", 3);
                 web.AddEdge("p", "r", 2);
@@ -72,6 +74,8 @@ namespace NUnitTestProject1
             try
             {
                 Web web = new Web();
+                web.SourceName = "s";
+                web.SinkName = "t";
                 web.AddEdge("s", "a", 5);
                 web.AddEdge("s", "b", 2);
                 web.AddEdge("o", "p", 2);
@@ -91,6 +95,8 @@ namespace NUnitTestProject1
         public void no_way()
         {
             Web web = new Web();
+            web.SourceName = "s";
+            web.SinkName = "t";
             web.AddEdge("s", "a", 5);
             web.AddEdge("b", "t", 2);
             try
@@ -99,7 +105,7 @@ namespace NUnitTestProject1
             }
             catch (Exception e)
             {
-                Assert.AreEqual(typeof(NullReferenceException), e.GetType(), "Wrong exception");
+                Assert.AreEqual("Can't find way from source to sink", e.Message, "Wrong exception");
             }
         }
 
@@ -107,6 +113,8 @@ namespace NUnitTestProject1
         public void existing_edge()
         {
             Web web = new Web();
+            web.SourceName = "s";
+            web.SinkName = "t";
             web.AddEdge("s", "a", 5);
             try
             {
@@ -114,7 +122,7 @@ namespace NUnitTestProject1
             }
             catch (Exception e)
             {
-                Assert.AreEqual(e.Message, "Trying add an existing edge");
+                Assert.AreEqual( "Trying add an existing edge", e.Message, "Wrong exception");
             }
         }
 
@@ -122,6 +130,8 @@ namespace NUnitTestProject1
         public void zero_bandwidth()
         {
             Web web = new Web();
+            web.SourceName = "s";
+            web.SinkName = "t";
             web.AddEdge("s", "a", 5);
             try
             {
@@ -129,7 +139,7 @@ namespace NUnitTestProject1
             }
             catch (Exception e)
             {
-                Assert.AreEqual(e.Message, "Trying to add edge with bandwidth less 1");
+                Assert.AreEqual("Trying to add edge with bandwidth less 1", e.Message, "Wrong exception");
             }
         }
 
@@ -137,6 +147,8 @@ namespace NUnitTestProject1
         public void loop_edge()
         {
             Web web = new Web();
+            web.SourceName = "s";
+            web.SinkName = "t";
             web.AddEdge("s", "a", 5);
             try
             {
@@ -144,7 +156,7 @@ namespace NUnitTestProject1
             }
             catch (Exception e)
             {
-                Assert.AreEqual(e.Message, "Trying to add loop edge");
+                Assert.AreEqual("Trying to add loop edge", e.Message, "Wrong exception");
             }
         }
     }
