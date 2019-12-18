@@ -10,6 +10,7 @@ namespace OptMethod
     public class Optimisation
     {
         public static double Tolerance { get; set; } = 0.1;//точность вычисления
+        public static int Kmax = 1000;
 
         //поиск минимума методо перебора
         public static double FindMinimum(Function F, Matrix StartPoint, Matrix Width, out int feval, out Matrix MinPoint)
@@ -22,9 +23,9 @@ namespace OptMethod
             MinPoint = MinPair.Key;
             List<double> MinList = new List<double>();
             //отсеивание лишних координат 
-            for(int i = 0;i < F.NumberOfVariables;i++)
+            for (int i = 0; i < F.NumberOfVariables; i++)
             {
-                MinList.Add(Math.Round( MinPoint[i, 0], 3));
+                MinList.Add(Math.Round(MinPoint[i, 0], 3));
             }
             MinPoint = new Matrix(MinList);
             return MinPair.Value;
@@ -54,6 +55,34 @@ namespace OptMethod
                 Point[0, 0] += Step;
             }
             return values;
+        }
+
+        public static double Newton(Function F, Matrix StartPoint, out int feval, out List<Matrix> points, out List<double> values, out Matrix MinPoint)
+        {
+            points = new List<Matrix>();
+            values = new List<double>();
+            feval = 0;
+            int k = 0;
+            double DXnorm = double.MaxValue;
+            Matrix X = StartPoint.Copy();
+            while (DXnorm >= Tolerance && k <= Kmax)
+            {
+                //сохраняем параметры текущиего приближения к минимуму
+                points.Add(X.Copy());
+                values.Add(F.GetValue(X));
+                var g = Matrix.Gradient(F, X, Tolerance);
+                feval += 2 * F.NumberOfVariables; //число вычислений для нахождения градиента
+                var G = Matrix.Gessian(F, X, Tolerance);
+                feval += 4 * F.NumberOfVariables * F.NumberOfVariables; //число вычислений для нахождения гессиана
+                Matrix DX = Matrix.Div(g,G);
+                DXnorm = Matrix.NormVector(DX); //вычисляем новый шаг
+                X = X - DX;
+                k++;
+            }
+            points.Add(X);
+            values.Add(F.GetValue(X));
+            MinPoint = X;
+            return values.Last();
         }
     }
 }

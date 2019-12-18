@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Functions;
+using NewtonMethod;
 
 namespace OptMethod
 {
@@ -15,10 +16,13 @@ namespace OptMethod
     {
         private static Function F;
         private static Matrix StartPoint;
-        private static Matrix AreaWidth;
-        private static int feval = 0;
+        private static int MaxVariables = 4;
+        private static int feval;
+        private static int iterations = 0;
         private static Matrix MinPoint;
         private static double MinValue;
+        private static List<Matrix> points;
+        private static List<double> values;
         public Form1()
         {
             InitializeComponent();
@@ -40,12 +44,12 @@ namespace OptMethod
             try
             {
                 F = new Function(FuncTextBox.Text);
-                if (F.NumberOfVariables <= 2)
+                if (F.NumberOfVariables <= MaxVariables)
                 {
                     X1ValBox.Enabled = true;
                     X2ValBox.Enabled = true;
-                    X1WidthBox.Enabled = true;
-                    X2WidthBox.Enabled = true;
+                    X3ValBox.Enabled = true;
+                    X4ValBox.Enabled = true;
                     TolBox.Enabled = true;
                     TolBox.Text = Optimisation.Tolerance.ToString();
                 }
@@ -65,9 +69,10 @@ namespace OptMethod
         {
             X1ValBox.Enabled = false;
             X2ValBox.Enabled = false;
-            X1WidthBox.Enabled = false;
-            X2WidthBox.Enabled = false;
+            X3ValBox.Enabled = false;
+            X4ValBox.Enabled = false;
             TolBox.Enabled = false;
+            ProtocolBtn.Enabled = false;
         }
 
         //поиск минимума
@@ -76,19 +81,31 @@ namespace OptMethod
             try
             {
                 List<double> StartP = new List<double>();
-                StartP.Add(double.Parse(X1ValBox.Text));
-                StartP.Add(double.Parse(X2ValBox.Text));
+                if (F.NumberOfVariables > 0)
+                {
+                    StartP.Add(double.Parse(X1ValBox.Text));
+                }
+                if (F.NumberOfVariables > 1)
+                {
+                    StartP.Add(double.Parse(X2ValBox.Text));
+                }
+                if (F.NumberOfVariables > 2)
+                {
+                    StartP.Add(double.Parse(X3ValBox.Text));
+                }
+                if (F.NumberOfVariables > 3)
+                {
+                    StartP.Add(double.Parse(X4ValBox.Text));
+                }
 
-                List<double> Widths = new List<double>();
-                Widths.Add(double.Parse(X1WidthBox.Text));
-                Widths.Add(double.Parse(X2WidthBox.Text));
 
                 StartPoint = new Matrix(StartP);
-                AreaWidth = new Matrix(Widths);
                 Optimisation.Tolerance = double.Parse(TolBox.Text);
 
-                MinValue = Optimisation.FindMinimum(F, StartPoint, AreaWidth, out feval, out MinPoint);
+                MinValue = Math.Round(Optimisation.Newton(F, StartPoint, out feval, out points, out values, out MinPoint), 10);
+                iterations = values.Count;
                 ShowResults();
+                ProtocolBtn.Enabled = true;
             }
             catch (OutOfMemoryException ex)
             {
@@ -106,6 +123,7 @@ namespace OptMethod
             ResultsTextBox.Text = "Min value: " + MinValue + Environment.NewLine
                 + "Point of minimum: " + Environment.NewLine + MinPoint.ToString()
                 + Environment.NewLine + "Feval: " + feval + Environment.NewLine +
+                "Iterations: " + iterations + Environment.NewLine +
                 "Tolerance: " + Optimisation.Tolerance;
 
 
@@ -114,6 +132,12 @@ namespace OptMethod
         private void label6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void ProtocolBtn_Click(object sender, EventArgs e)
+        {
+            ProtocolForm P = new ProtocolForm(F, points, values);
+            P.ShowDialog();
         }
     }
 }

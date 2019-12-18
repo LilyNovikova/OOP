@@ -8,6 +8,7 @@ namespace Functions
 {
     public class Function
     {
+        public string Expression { get; private set; }
         private Tree FunctionTree;
         private FunctionParser Parser;
         public int NumberOfVariables //число переменных
@@ -19,6 +20,7 @@ namespace Functions
         }
         public Function(string expr)
         {
+            Expression = expr;
             Parser = new FunctionParser(expr);
             FunctionTree = Parser.FunctionTree;
         }

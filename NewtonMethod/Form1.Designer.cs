@@ -38,15 +38,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.FindMinBtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.X1ValBox = new System.Windows.Forms.TextBox();
             this.X2ValBox = new System.Windows.Forms.TextBox();
-            this.X1WidthBox = new System.Windows.Forms.TextBox();
-            this.X2WidthBox = new System.Windows.Forms.TextBox();
+            this.X4ValBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.TolBox = new System.Windows.Forms.TextBox();
+            this.X3ValBox = new System.Windows.Forms.TextBox();
+            this.ProtocolBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // FuncTextBox
@@ -147,16 +147,6 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Search start point:";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 108);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(126, 17);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Search area width:";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -164,7 +154,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 17);
             this.label7.TabIndex = 15;
-            this.label7.Text = "X2:";
+            this.label7.Text = "X4:";
             // 
             // label8
             // 
@@ -173,7 +163,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(29, 17);
             this.label8.TabIndex = 14;
-            this.label8.Text = "X1:";
+            this.label8.Text = "X3:";
             // 
             // X1ValBox
             // 
@@ -189,19 +179,12 @@
             this.X2ValBox.Size = new System.Drawing.Size(100, 22);
             this.X2ValBox.TabIndex = 18;
             // 
-            // X1WidthBox
+            // X4ValBox
             // 
-            this.X1WidthBox.Location = new System.Drawing.Point(209, 103);
-            this.X1WidthBox.Name = "X1WidthBox";
-            this.X1WidthBox.Size = new System.Drawing.Size(100, 22);
-            this.X1WidthBox.TabIndex = 19;
-            // 
-            // X2WidthBox
-            // 
-            this.X2WidthBox.Location = new System.Drawing.Point(377, 102);
-            this.X2WidthBox.Name = "X2WidthBox";
-            this.X2WidthBox.Size = new System.Drawing.Size(100, 22);
-            this.X2WidthBox.TabIndex = 20;
+            this.X4ValBox.Location = new System.Drawing.Point(377, 102);
+            this.X4ValBox.Name = "X4ValBox";
+            this.X4ValBox.Size = new System.Drawing.Size(100, 22);
+            this.X4ValBox.TabIndex = 20;
             // 
             // label9
             // 
@@ -219,18 +202,35 @@
             this.TolBox.Size = new System.Drawing.Size(100, 22);
             this.TolBox.TabIndex = 22;
             // 
+            // X3ValBox
+            // 
+            this.X3ValBox.Location = new System.Drawing.Point(209, 103);
+            this.X3ValBox.Name = "X3ValBox";
+            this.X3ValBox.Size = new System.Drawing.Size(100, 22);
+            this.X3ValBox.TabIndex = 19;
+            // 
+            // ProtocolBtn
+            // 
+            this.ProtocolBtn.Location = new System.Drawing.Point(517, 195);
+            this.ProtocolBtn.Name = "ProtocolBtn";
+            this.ProtocolBtn.Size = new System.Drawing.Size(105, 45);
+            this.ProtocolBtn.TabIndex = 23;
+            this.ProtocolBtn.Text = "Protocol";
+            this.ProtocolBtn.UseVisualStyleBackColor = true;
+            this.ProtocolBtn.Click += new System.EventHandler(this.ProtocolBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(651, 547);
+            this.Controls.Add(this.ProtocolBtn);
             this.Controls.Add(this.TolBox);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.X2WidthBox);
-            this.Controls.Add(this.X1WidthBox);
+            this.Controls.Add(this.X4ValBox);
+            this.Controls.Add(this.X3ValBox);
             this.Controls.Add(this.X2ValBox);
             this.Controls.Add(this.X1ValBox);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label5);
@@ -263,14 +263,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button FindMinBtn;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox X1ValBox;
         private System.Windows.Forms.TextBox X2ValBox;
-        private System.Windows.Forms.TextBox X1WidthBox;
-        private System.Windows.Forms.TextBox X2WidthBox;
+        private System.Windows.Forms.TextBox X4ValBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox TolBox;
+        private System.Windows.Forms.TextBox X3ValBox;
+        private System.Windows.Forms.Button ProtocolBtn;
     }
 }

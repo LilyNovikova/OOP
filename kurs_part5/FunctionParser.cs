@@ -424,6 +424,7 @@ namespace Functions
             }
             else
             {
+                char c = Expression[index];
                 throw new Exception("Некорректные символы");
             }
 
