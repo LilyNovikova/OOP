@@ -1,3 +1,9 @@
+parameters:
+  - name: 'ParamName' 
+    type: boolean
+    default: false
+
+
 trigger:
 - master
 
@@ -76,7 +82,7 @@ stages:
 
   dependsOn: Build
 
-  condition: succeeded()
+  condition: and(succeeded(), ne(${{ parameters.ParamName }}, 'false')) 
 
   jobs:
 
