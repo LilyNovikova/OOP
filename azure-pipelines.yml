@@ -18,6 +18,7 @@ variables:
   buildConfiguration: 'Release'
   solution: '**/*.sln'
   artifactName: 'test-solution'
+  var1: "a"
 
 # ============================================
 # DEFAULT AGENT
@@ -31,6 +32,24 @@ pool:
 # ============================================
 
 stages:
+
+- stage: 
+  jobs:
+    - job: EditVar1
+      pool:
+        vmImage: 'ubuntu-latest'
+
+      steps: 
+      - script: var1 = 'aa'
+
+- stage: 
+  jobs:
+    - job: PrintVar1
+      pool:
+        vmImage: 'ubuntu-latest'
+
+      steps: 
+      - script: echo var1
 
 # ============================================
 # BUILD
