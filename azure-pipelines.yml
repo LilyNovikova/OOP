@@ -82,7 +82,7 @@ stages:
 
   dependsOn: Build
 
-  condition: or(succeeded(), ne(${{ parameters.ParamName }}, 'false')) 
+  condition: ne(${{ parameters.ParamName }}, false)
 
   jobs:
 
