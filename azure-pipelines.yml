@@ -1,0 +1,128 @@
+trigger:
+- master
+
+pr:
+- master
+
+# ============================================
+# VARIABLES
+# ============================================
+
+variables:
+  buildConfiguration: 'Release'
+  solution: '**/*.sln'
+  artifactName: 'test-solution'
+
+# ============================================
+# DEFAULT AGENT
+# ============================================
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+# ============================================
+# STAGES
+# ============================================
+
+stages:
+
+# ============================================
+# BUILD
+# ============================================
+
+- stage: Build
+
+  jobs:
+
+  - job: BuildJob
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+
+    # Checkout the current repository
+    - checkout: self
+
+    - script: |
+        echo "Build configuration: $(buildConfiguration)"
+        echo "Solution: $(solution)"
+      displayName: 'Show build variables'
+
+    - script: |
+        dotnet restore $(solution)
+        dotnet build $(solution) \
+          --configuration $(buildConfiguration) \
+          --no-restore
+      displayName: 'Build solution'
+
+    # ========================================
+    # PUBLISH ARTIFACT
+    # ========================================
+
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish build artifact'
+      inputs:
+        targetPath: '$(Build.SourcesDirectory)'
+        artifact: '$(artifactName)'
+        publishLocation: 'pipeline'
+
+
+# ============================================
+# TEST
+# ============================================
+
+- stage: Test
+
+  dependsOn: Build
+
+  condition: succeeded()
+
+  jobs:
+
+  - job: TestJob
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+
+    - checkout: self
+
+    - script: |
+        echo "Running tests..."
+        dotnet test $(solution) \
+          --configuration $(buildConfiguration) \
+          --no-restore
+      displayName: 'Run tests'
+
+
+# ============================================
+# DEPLOY
+# ============================================
+
+- stage: Deploy
+
+  dependsOn: Test
+
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+  jobs:
+  - deployment: DeployJob
+    environment: test
+    strategy:
+      runOnce:
+        deploy:
+
+          steps:
+
+          - checkout: none
+
+          - download: current
+            artifact: '$(artifactName)'
+
+          - script: |
+              echo "Deploying artifact..."
+              echo "Environment: test"
+            displayName: 'Deploy application'
+
