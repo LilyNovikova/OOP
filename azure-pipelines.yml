@@ -30,8 +30,11 @@ stages:
   dependsOn: Test
   condition: succeeded()
   jobs:
-  - job: DeployJob
-    steps:
-    - script: echo Deploy application here
-      displayName: 'Deploy'
+  - deployment: DeployJob
+    environment: test
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo Deploy
 
