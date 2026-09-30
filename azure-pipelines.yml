@@ -40,7 +40,7 @@ stages:
         vmImage: 'ubuntu-latest'
 
       steps: 
-      - script: var1 = 'aa'
+      - script: $(var1) = 'aa'
 
 - stage: 
   jobs:
@@ -49,7 +49,7 @@ stages:
         vmImage: 'ubuntu-latest'
 
       steps: 
-      - script: echo var1
+      - script: echo $(var1)
 
 # ============================================
 # BUILD
